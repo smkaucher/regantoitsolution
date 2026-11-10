@@ -1,7 +1,6 @@
 <section class="block why" data-replay data-threshold="0.25">
     <div>
         <h2 data-a="left" style="--d:0s">Why Businesses Choose {{ $site['site_name'] ?? 'Reganto IT Solution' }}</h2>
-        <p class="sub left" data-a="left" style="--d:.12s">A reliable partner that blends strong design thinking, clean engineering, and a clear delivery process. From discovery to launch — and beyond — we stay accountable.</p>
     </div>
     <ul>
         @foreach(['Strategy-Led UI/UX That Converts', 'Custom Builds Tailored to Your Goals', 'Transparent Communication & Process', 'Scalable Frontend & Backend Engineering', 'Performance, Speed & Quality Standards', 'Reliable Support & Long-Term Partnership'] as $i => $text)

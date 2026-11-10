@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Services – ' . ($site['site_name'] ?? 'Reganto IT Solution'))
-@section('description', 'UI/UX design, web and app development and branding services, from first sketch to production.')
+@section('description', 'Software, UI/UX design, branding, marketing and cyber security services, from first sketch to production.')
 @section('content')
-    @include('pages._head', ['title' => 'Our Services', 'crumb' => 'Services', 'lead' => 'UI/UX design, development and branding, from first sketch to production.'])
+    @include('pages._head', ['title' => 'Our Services', 'crumb' => 'Services', 'lead' => 'Software, UI/UX design, branding, marketing and cyber security, from first sketch to production.'])
     <section class="block"><div class="pg-cards">
         @foreach($services as $s)
             <a class="pg-card" href="{{ url('/services/' . $s->slug) }}">

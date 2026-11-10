@@ -4,17 +4,28 @@
 @section('og_image', \App\Support\Media::url($service->image) ?? '')
 @section('content')
     @include('pages._head', ['title' => $service->title, 'crumb' => 'Services / ' . $service->title, 'lead' => $service->short_description])
-    <section class="block pg-split">
+    <section class="block pg-split svc-page">
         <div>
             @if($service->image)<img class="pg-cover" src="{{ \App\Support\Media::url($service->image) }}" alt="{{ $service->title }}">@endif
             <div class="pg-prose">{!! $service->details ?: '<p>' . e($service->short_description) . '</p>' !!}</div>
-            <a class="btn" href="{{ url('/contact') }}?service={{ $service->id }}">Request this service <x-icon name="arrow-right" /></a>
+
+            @if($service->items->count())
+                <h3 class="svc-h">What we deliver</h3>
+                <div class="svc-grid" data-replay data-threshold="0.1">
+                    @foreach($service->items as $n => $i)
+                        <article class="svc-item" data-a="up" style="--d:{{ min($n, 6) * .06 }}s">
+                            <span class="svc-num">{{ str_pad($n + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                            <b>{{ $i->title }}</b>
+                            @if($i->description)<p>{{ $i->description }}</p>@endif
+                        </article>
+                    @endforeach
+                </div>
+            @endif
         </div>
-        <aside class="pg-side">
-            <h4>What we deliver</h4>
-            <ul>@foreach($service->items as $i)<li><b>{{ $i->title }}</b>@if($i->description)<span>{{ $i->description }}</span>@endif</li>@endforeach</ul>
-            <h4>Other services</h4>
-            @foreach($others as $o)<a href="{{ url('/services/' . $o->slug) }}">{{ $o->title }}</a>@endforeach
+        <aside class="svc-book">
+            <h3>Book this service</h3>
+            <p>Message or call us and we will get back within 30 minutes.</p>
+            @include('partials.contact-actions', ['service' => $service])
         </aside>
     </section>
 @endsection

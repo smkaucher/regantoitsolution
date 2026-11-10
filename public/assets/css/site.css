@@ -461,3 +461,25 @@ main>section{margin-top:3.5rem}
 
 /* Navbar + Hero: Dark Blue (#0b1c2a) -> Blue (#2F668A) -> Light Blue (#9fcbe6), baki site #306883 */
 .nav,.page .hero{--violet:#2f668a;--violet-2:#4b8fb0;--lav:#0b1c2a}
+
+@media (min-width:901px){.nav>.btn.btn-sm{margin-right:-.5rem}}
+
+/* Small phones: keep the header on one line and never wider than the screen */
+@media (max-width:400px){
+ .nav{gap:.3rem}
+ .logo-img{height:1.9rem;max-width:9.5rem;object-fit:contain}
+ .menu-btn{margin-right:.3rem;padding:.35rem .65rem}
+ .nav>.btn.btn-sm{font-size:.72rem;padding:.5rem .8rem;gap:.3rem;white-space:nowrap}
+ .nav>.btn.btn-sm svg{width:14px;height:14px}
+}
+@media (max-width:340px){
+ .logo-img{max-width:7.5rem}
+ .nav>.btn.btn-sm svg{display:none}
+}
+
+/* Phones: Live Chat becomes a round icon so it doesn't cover page content */
+@media (max-width:520px){
+ .chat-fab{padding:.8rem}
+ .chat-fab-txt{display:none}
+ .chat-fab-ico{width:1.6rem}
+}

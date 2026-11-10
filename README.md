@@ -4,7 +4,7 @@ A dynamic IT-solution company website built with **Laravel 12** (PHP 8.2+) and *
 Plain Blade views, CSS and vanilla JS, so there is **no Node or Vite build step**.
 
 - **Public site:** home, about, services (list + detail), projects (list + detail, filter), team, blog (list + detail), contact / request-a-service form.
-- **Admin panel** (`/admin`): site settings and logo, services and sub-items, projects with gallery, IT team, service requests, testimonials, FAQs, stats, client logos and blog articles.
+- **Admin panel** (`/admin`): site settings and logo, services and sub-items, projects with gallery, testimonials, FAQs, stats, client logos and blog articles.
 - **SEO:** per-page meta, canonical and Open Graph tags, `sitemap.xml`, `robots.txt`, a 404 page, automatic image resizing on upload.
 
 ## Run it on XAMPP (Windows)
@@ -51,8 +51,6 @@ Log in at `/admin/login`, then use the sidebar:
 | Site settings | Logo, favicon, site name, tagline, contact details, social links, home hero text, footer text |
 | Services | Services and their sub-items (home tabs and the service page), image, order, show/hide |
 | Projects | Projects with cover photo, multi-photo gallery, category, live URL, featured (home page) |
-| IT Team | Members with photo, designation, bio, portfolio and social links, order |
-| Requests | Service requests from the contact form: search, filter, status, internal note, delete |
 | Testimonials, FAQs, Stats, Client logos, Blogs | The content blocks shown on the home page and blog |
 
 Notes:

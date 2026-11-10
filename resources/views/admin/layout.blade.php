@@ -14,8 +14,6 @@
         ['Site settings', 'admin.settings', 'settings'],
         ['Services', 'admin.services.*', 'services'],
         ['Projects', 'admin.projects.*', 'projects'],
-        ['IT Team', 'admin.team.*', 'team'],
-        ['Requests', 'admin.requests.*', 'requests'],
     ];
 @endphp
 <aside class="ad-side">

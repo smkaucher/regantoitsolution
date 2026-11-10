@@ -16,11 +16,6 @@ class Service extends Model
         return $this->hasMany(ServiceItem::class)->orderBy('sort_order');
     }
 
-    public function requests(): HasMany
-    {
-        return $this->hasMany(ServiceRequest::class);
-    }
-
     public function scopeActive($q)
     {
         return $q->where('is_active', true)->orderBy('sort_order');

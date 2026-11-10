@@ -41,6 +41,7 @@
         @include('partials.footer')
     </div>
     @include('partials.chat')
+    @include('partials.ai-chat')
     <script src="{{ asset('assets/js/site.js') }}?v={{ filemtime(public_path('assets/js/site.js')) }}" defer></script>
     @stack('scripts')
 </body>

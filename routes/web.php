@@ -17,7 +17,7 @@ Route::get('/team', [PageController::class, 'team'])->name('team');
 Route::get('/blog', [PageController::class, 'blogs'])->name('blog');
 Route::get('/blog/{slug}', [PageController::class, 'blog'])->name('blog.show');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
-Route::post('/contact', [PageController::class, 'submitRequest'])->middleware('throttle:5,1')->name('contact.submit');
+Route::post('/ai-chat', [\App\Http\Controllers\AiChatController::class, 'send'])->middleware('throttle:20,1')->name('ai.chat');
 
 // ---------- Admin ----------
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -32,10 +32,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('services', \App\Http\Controllers\Admin\ServiceController::class)->except('show');
         Route::patch('projects/{project}/toggle', [\App\Http\Controllers\Admin\ProjectController::class, 'toggle'])->name('projects.toggle');
         Route::resource('projects', \App\Http\Controllers\Admin\ProjectController::class)->except('show');
-        Route::patch('team/{team}/toggle', [\App\Http\Controllers\Admin\TeamController::class, 'toggle'])->name('team.toggle');
-        Route::patch('team/{team}/move', [\App\Http\Controllers\Admin\TeamController::class, 'move'])->name('team.move');
-        Route::resource('team', \App\Http\Controllers\Admin\TeamController::class)->except('show');
-        Route::resource('requests', \App\Http\Controllers\Admin\RequestController::class)->only(['index', 'show', 'update', 'destroy'])->parameters(['requests' => 'serviceRequest']);
         Route::prefix('content/{type}')->where(['type' => 'testimonials|faqs|stats|clients|blogs', 'id' => '[0-9]+'])->name('content.')->group(function () {
             Route::get('/', [\App\Http\Controllers\Admin\ContentController::class, 'index'])->name('index');
             Route::get('create', [\App\Http\Controllers\Admin\ContentController::class, 'create'])->name('create');

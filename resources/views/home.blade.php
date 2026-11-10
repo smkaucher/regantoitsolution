@@ -15,18 +15,14 @@
 
 @section('content')
     @include('home.hero')
-    @include('home.showcase')
     @include('home.ambition')
     @include('home.logos')
     @include('home.stats')
-    @include('home.leader')
     @include('home.services')
-    @include('home.features')
     @include('home.work')
-    @include('home.why')
+    @include('home.features')
     @include('home.reviews')
     @include('home.faq')
-    @include('home.blogs')
 @endsection
 
 @push('scripts')

@@ -5,10 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use App\Models\Project;
 use App\Models\Service;
-use App\Models\ServiceRequest;
-use Illuminate\Http\Request;
 use App\Models\Stat;
-use App\Models\TeamMember;
 
 class PageController extends Controller
 {
@@ -16,7 +13,7 @@ class PageController extends Controller
     {
         return view('pages.about', [
             'stats' => Stat::active()->take(4)->get(),
-            'team' => TeamMember::active()->take(4)->get(),
+            'team' => collect(config('team.groups'))->flatten(1)->unique('name')->take(4)->values()->all(),
         ]);
     }
 
@@ -37,12 +34,24 @@ class PageController extends Controller
 
     public function projects()
     {
-        $projects = Project::active()->get();
+        $projects = Project::active()->with('images')->get();
+        $tabs = collect(['Web Development', 'UI/UX Design', 'Software', 'Graphics & Branding'])
+            ->filter(fn ($t) => $projects->contains(fn ($p) => in_array($t, $p->tags(), true)))->values();
 
-        return view('pages.projects', [
-            'projects' => $projects,
-            'categories' => $projects->pluck('category')->filter()->unique()->values(),
-        ]);
+        $data = $projects->map(fn ($p) => [
+            'slug' => $p->slug,
+            'title' => $p->title,
+            'category' => $p->category,
+            'tags' => array_values($p->tags()),
+            'client' => $p->client,
+            'url' => $p->url,
+            'summary' => $p->short_description,
+            'description' => $p->description,
+            'images' => collect([$p->cover_image])->merge($p->images->pluck('path'))->filter()
+                ->map(fn ($i) => \App\Support\Media::url($i))->unique()->values(),
+        ])->values();
+
+        return view('pages.projects', ['projects' => $projects, 'tabs' => $tabs, 'data' => $data]);
     }
 
     public function project(string $slug)
@@ -57,7 +66,9 @@ class PageController extends Controller
 
     public function team()
     {
-        return view('pages.team', ['team' => TeamMember::active()->get()]);
+        $groups = collect(config('team.groups'))->map(fn ($members, $name) => ['name' => $name, 'members' => $members, 'cover' => config('team.covers.'.$name)])->values();
+
+        return view('pages.team', ['groups' => $groups]);
     }
 
     public function blogs()
@@ -77,28 +88,6 @@ class PageController extends Controller
 
     public function contact()
     {
-        return view('pages.contact', ['services' => Service::active()->get()]);
-    }
-
-    public function submitRequest(Request $request)
-    {
-        // Honeypot: bots fill the hidden "website" field.
-        if ($request->filled('website')) {
-            return redirect()->route('contact')->with('sent', true);
-        }
-
-        $data = $request->validate([
-            'name' => 'required|string|max:120',
-            'email' => 'required|email|max:190',
-            'phone' => 'nullable|string|max:40',
-            'company' => 'nullable|string|max:150',
-            'service_id' => 'nullable|exists:services,id',
-            'budget' => 'nullable|string|max:60',
-            'message' => 'required|string|min:10|max:3000',
-        ]);
-
-        ServiceRequest::create($data);
-
-        return redirect()->route('contact')->with('sent', true);
+        return view('pages.contact');
     }
 }

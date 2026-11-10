@@ -55,10 +55,10 @@
         </div>
         <div>
             <h4>Others</h4>
-            <a href="{{ url('/contact') }}">Request a Service</a>
+            <a href="{{ url('/contact') }}">Book a Service</a>
             <a href="mailto:{{ $site['email'] ?? '' }}">{{ $site['email'] ?? '' }}</a>
             <a href="tel:{{ $tel }}">{{ $site['phone'] ?? '' }}</a>
-            @if(!empty($site['address']))<span>{{ $site['address'] }}</span>@endif
+            <a href="{{ config('site.map_url') }}" target="_blank" rel="noreferrer">{{ $site['address'] ?: config('site.address') }}</a>
         </div>
     </div>
     <div class="closing-bar"><small>© {{ date('Y') }} {{ $site['footer_text'] ?? 'Reganto IT Solution. All Rights Reserved.' }}</small><a href="{{ url('/contact') }}">Contact</a></div>

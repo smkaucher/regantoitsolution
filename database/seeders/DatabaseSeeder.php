@@ -9,7 +9,6 @@ use App\Models\Project;
 use App\Models\Service;
 use App\Models\Setting;
 use App\Models\Stat;
-use App\Models\TeamMember;
 use App\Models\Testimonial;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -47,7 +46,7 @@ class DatabaseSeeder extends Seeder
             'youtube' => 'https://www.youtube.com/@RegantoITSolution',
             'tiktok' => 'https://www.tiktok.com/@regantoitsolution',
             'hero_title' => 'Your Trusted IT Solution Partner',
-            'hero_subtitle' => 'UI/UX design, development and branding for startups and growing companies.',
+            'hero_subtitle' => 'Software, UI/UX design, branding, marketing and cyber security for startups and growing companies.',
             'footer_text' => 'Reganto IT Solution. All rights reserved.',
         ];
         foreach ($settings as $k => $v) {
@@ -77,6 +76,20 @@ class DatabaseSeeder extends Seeder
                 ['Content Direction', 'Guide visuals and copy to keep everything consistently on-brand.'],
                 ['Brand Refresh', 'Modernize your identity while preserving core recognition.'],
             ],
+            'Marketing' => [
+                ['SEO & Content', 'Rank higher on search with technical SEO, keyword strategy and content that earns trust.'],
+                ['Paid Ads', 'Run Google and Meta ad campaigns tuned for leads and sales, not just clicks.'],
+                ['Social Media Marketing', 'Plan, design and post consistently to grow an engaged audience on every platform.'],
+                ['Email & WhatsApp Campaigns', 'Reach customers directly with well-timed, personalised messages.'],
+                ['Analytics & Reporting', 'Track what works with clear dashboards and monthly reports.'],
+            ],
+            'Cyber Security' => [
+                ['Penetration Testing', 'Find and fix weaknesses in your website, app or network before attackers do.'],
+                ['Vulnerability Assessment', 'Scan and review your systems, then get a clear, prioritised fix list.'],
+                ['Secure Code Review', 'Check your code against OWASP risks and harden it before release.'],
+                ['Network & Server Security', 'Lock down servers, firewalls and access so your infrastructure stays safe.'],
+                ['Incident Response', 'Get fast help to contain a breach, recover and prevent it happening again.'],
+            ],
         ];
         $i = 0;
         foreach ($services as $title => $items) {
@@ -93,27 +106,14 @@ class DatabaseSeeder extends Seeder
         }
 
         $projects = [
-            ['StorePal E-Commerce Store', 'Development', 'https://storepal.com.bd/', true],
-            ['Regantify · Gadget Depo BD Store', 'Development', 'https://www.gadgetdepobd.com/', true],
-            ['Excellence Visa Consultancy', 'Website', 'https://excellencevisaconsultancy.com/', true],
+            ['StorePal E-Commerce Store', 'Web Development', 'https://storepal.com.bd/', true],
         ];
-        Project::whereIn('slug', ['storepal', 'gadget-depo-bd'])->delete();
+        Project::whereIn('slug', ['storepal', 'gadget-depo-bd', 'excellence-visa-consultancy', 'regantify-gadget-depo-bd-store'])->delete();
         foreach ($projects as $i => [$title, $cat, $url, $featured]) {
             Project::updateOrCreate(['slug' => Str::slug($title)], [
                 'title' => $title, 'category' => $cat, 'url' => $url,
                 'short_description' => "{$title}: a {$cat} project delivered by Reganto IT Solution.",
                 'is_featured' => $featured, 'sort_order' => $i + 1,
-            ]);
-        }
-
-        $team = [
-            ['Team Lead', 'Founder & CEO'],
-            ['Senior Developer', 'Full-Stack Developer'],
-            ['UI/UX Designer', 'Product Designer'],
-        ];
-        foreach ($team as $i => [$name, $role]) {
-            TeamMember::updateOrCreate(['name' => $name], [
-                'designation' => $role, 'bio' => 'Sample team member. Edit from the admin panel.', 'sort_order' => $i + 1,
             ]);
         }
 

@@ -1,54 +1,25 @@
 @extends('layouts.app')
 @section('title', 'Contact Us – ' . ($site['site_name'] ?? 'Reganto IT Solution'))
-@section('description', 'Tell us about your project and request a service. We reply within 30 minutes.')
+@section('description', 'Book a service or ask a question: reach us on WhatsApp, email or phone. We reply within 30 minutes.')
 @section('content')
-    @include('pages._head', ['title' => 'Contact Us', 'crumb' => 'Contact', 'lead' => 'Tell us about your project. We reply within 30 minutes.'])
-    <section class="block pg-split">
-        <div>
-            <h3>Request a Service</h3>
-            @if(session('sent'))
-                <div class="pg-ok" role="status">Thank you! Your request has been received. We will contact you shortly.</div>
-            @endif
-            <form class="pg-form" method="POST" action="{{ route('contact.submit') }}" novalidate>
-                @csrf
-                <input type="text" name="website" class="pg-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-                <div class="pg-row">
-                    <label>Name *<input type="text" name="name" value="{{ old('name') }}" required>@error('name')<em>{{ $message }}</em>@enderror</label>
-                    <label>Email *<input type="email" name="email" value="{{ old('email') }}" required>@error('email')<em>{{ $message }}</em>@enderror</label>
-                </div>
-                <div class="pg-row">
-                    <label>Phone<input type="text" name="phone" value="{{ old('phone') }}">@error('phone')<em>{{ $message }}</em>@enderror</label>
-                    <label>Company<input type="text" name="company" value="{{ old('company') }}">@error('company')<em>{{ $message }}</em>@enderror</label>
-                </div>
-                <div class="pg-row">
-                    <label>Service
-                        <select name="service_id">
-                            <option value="">Select a service</option>
-                            @foreach($services as $s)
-                                <option value="{{ $s->id }}" @selected(old('service_id', request('service')) == $s->id)>{{ $s->title }}</option>
-                            @endforeach
-                        </select>
-                    </label>
-                    <label>Budget
-                        <select name="budget">
-                            <option value="">Select a range</option>
-                            @foreach(['Under $1,000', '$1,000 – $5,000', '$5,000 – $15,000', '$15,000+'] as $b)
-                                <option @selected(old('budget') == $b)>{{ $b }}</option>
-                            @endforeach
-                        </select>
-                    </label>
-                </div>
-                <label>Message *<textarea name="message" rows="5" required>{{ old('message') }}</textarea>@error('message')<em>{{ $message }}</em>@enderror</label>
-                <button class="btn" type="submit">Send request <x-icon name="arrow-right" /></button>
-            </form>
+    @php $addr = $site['address'] ?: config('site.address'); @endphp
+    @include('pages._head', ['title' => 'Contact Us', 'crumb' => 'Contact', 'lead' => 'Book a service or ask us anything. We reply within 30 minutes.'])
+    <section class="block">
+        <h2>Choose how to reach us</h2>
+        @include('partials.contact-actions')
+    </section>
+    <section class="block">
+        <div class="map-card">
+            <div class="map-info">
+                <span class="map-pin"><x-icon name="rocket" size="22" /></span>
+                <h3>Visit our office</h3>
+                <p>{{ $addr }}</p>
+                <a class="btn btn-sm" href="{{ config('site.map_url') }}" target="_blank" rel="noreferrer">Get directions <x-icon name="arrow-circle" size="16" /></a>
+            </div>
+            <div class="map-frame">
+                <iframe title="Reganto IT Solution on the map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen
+                        src="https://maps.google.com/maps?q={{ rawurlencode(config('site.map_query')) }}&z=16&output=embed"></iframe>
+            </div>
         </div>
-        <aside class="pg-side">
-            <h4>Get in touch</h4>
-            <ul>
-                @if(!empty($site['email']))<li><b>Email</b><a href="mailto:{{ $site['email'] }}">{{ $site['email'] }}</a></li>@endif
-                @if(!empty($site['phone']))<li><b>Phone</b><a href="tel:{{ preg_replace('/[^\d+]/', '', $site['phone']) }}">{{ $site['phone'] }}</a></li>@endif
-                @if(!empty($site['address']))<li><b>Address</b><span>{{ $site['address'] }}</span></li>@endif
-            </ul>
-        </aside>
     </section>
 @endsection

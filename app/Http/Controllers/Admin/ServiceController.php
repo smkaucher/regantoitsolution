@@ -61,7 +61,7 @@ class ServiceController extends Controller
     public function destroy(Service $service)
     {
         $this->deleteImage($service->image);
-        $service->delete(); // items cascade; requests keep their row with service_id nulled
+        $service->delete(); // items cascade
 
         return redirect()->route('admin.services.index')->with('ok', 'Service deleted.');
     }
