@@ -26,10 +26,11 @@
 
   function time() { return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); }
 
-  function bubble(role, text, t) {
+  function bubble(role, text, t, wa) {
     var row = document.createElement('div');
     row.className = 'aic-row ' + (role === 'user' ? 'me' : 'bot');
-    row.innerHTML = '<div class="aic-msg">' + fmt(text) + '<time>' + esc(t || time()) + '</time></div>';
+    var cta = wa && /^https:\/\/wa\.me\//.test(wa) ? '<a class="aic-wa" href="' + esc(wa) + '" target="_blank" rel="noreferrer">Send on WhatsApp to confirm</a>' : '';
+    row.innerHTML = '<div class="aic-msg">' + fmt(text) + cta + '<time>' + esc(t || time()) + '</time></div>';
     log.appendChild(row);
     log.scrollTop = log.scrollHeight;
     return row;
@@ -41,7 +42,7 @@
     log.innerHTML = '';
     bubble('assistant', WELCOME, '');
     log.firstChild.querySelector('time').remove();
-    msgs.forEach(function (m) { bubble(m.role, m.content, m.t); });
+    msgs.forEach(function (m) { bubble(m.role, m.content, m.t, m.wa); });
     chips.hidden = msgs.length > 0;
   }
 
@@ -71,14 +72,14 @@
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': root.dataset.token },
       body: JSON.stringify({ message: text, history: history })
     }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-      .then(function (j) { return j.reply; })
-      .catch(function () { return 'Sorry, I could not answer right now. Please message us on WhatsApp or use the Contact page.'; })
+      .then(function (j) { return { reply: j.reply, wa: j.whatsapp || '' }; })
+      .catch(function () { return { reply: 'Sorry, I could not answer right now. Please message us on WhatsApp or use the Contact page.', wa: '' }; })
       .then(function (reply) {
         var wait = Math.max(0, 600 - (Date.now() - started));
         setTimeout(function () {
           dots.remove();
-          msgs.push({ role: 'assistant', content: reply, t: time() });
-          bubble('assistant', reply, msgs[msgs.length - 1].t);
+          msgs.push({ role: 'assistant', content: reply.reply, t: time(), wa: reply.wa });
+          bubble('assistant', reply.reply, msgs[msgs.length - 1].t, reply.wa);
           save();
           busy = false;
           input.focus();

@@ -532,3 +532,7 @@
 @media (max-width:800px){.ab-intro{grid-template-columns:1fr}.ab-grid{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:520px){.ab-grid,.ab-steps ol{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.ab-360 i,.ab-copy h2 em{animation:none}}
+
+/* AI chat: "Send on WhatsApp" confirmation button */
+.aic-msg a.aic-wa{display:flex;align-items:center;justify-content:center;gap:.4rem;margin:.6rem 0 .3rem;padding:.6rem .9rem;border-radius:.8rem;background:#25d366;color:#fff!important;text-decoration:none;font-weight:700;font-size:.85rem;box-shadow:0 6px 16px -6px rgba(37,211,102,.7);transition:transform .2s,background .2s}
+.aic-msg a.aic-wa:hover{background:#1ebe5a;transform:translateY(-1px)}

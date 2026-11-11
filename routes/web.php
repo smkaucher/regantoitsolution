@@ -17,7 +17,7 @@ Route::get('/team', [PageController::class, 'team'])->name('team');
 Route::get('/blog', [PageController::class, 'blogs'])->name('blog');
 Route::get('/blog/{slug}', [PageController::class, 'blog'])->name('blog.show');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
-Route::post('/ai-chat', [\App\Http\Controllers\AiChatController::class, 'send'])->middleware('throttle:20,1')->name('ai.chat');
+Route::post('/ai-chat', [\App\Http\Controllers\AiChatController::class, 'send'])->middleware('throttle:40,1')->name('ai.chat');
 
 // ---------- Admin ----------
 Route::prefix('admin')->name('admin.')->group(function () {

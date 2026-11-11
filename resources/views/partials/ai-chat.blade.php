@@ -9,6 +9,7 @@
         </header>
         <div class="aic-log" id="aicLog" aria-live="polite"></div>
         <div class="aic-chips" id="aicChips">
+            <button type="button">I want to start a project</button>
             <button type="button">What services do you offer?</button>
             <button type="button">Show your recent projects</button>
             <button type="button">How can I book a service?</button>
