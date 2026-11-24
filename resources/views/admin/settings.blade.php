@@ -3,9 +3,8 @@
 @section('content')
 @php
     $text = fn ($key, $label, $type = 'text') => compact('key', 'label', 'type');
-    $img = fn ($key) => \App\Support\Media::url($s[$key] ?? null);
 @endphp
-<form class="ad-form" method="POST" action="{{ route('admin.settings.update') }}" enctype="multipart/form-data">
+<form class="ad-form" method="POST" action="{{ route('admin.settings.update') }}">
     @csrf
     @if($errors->any())<div class="ad-err">Please fix the highlighted fields below.</div>@endif
 
@@ -14,18 +13,6 @@
         <div class="ad-grid">
             <label>Site name *<input type="text" name="site_name" value="{{ old('site_name', $s['site_name'] ?? '') }}">@error('site_name')<em>{{ $message }}</em>@enderror</label>
             <label>Tagline<input type="text" name="tagline" value="{{ old('tagline', $s['tagline'] ?? '') }}">@error('tagline')<em>{{ $message }}</em>@enderror</label>
-            <div class="ad-file">
-                <span>Logo</span>
-                @if($img('logo'))<img src="{{ $img('logo') }}" alt="Current logo" class="ad-thumb">@endif
-                <input type="file" name="logo" accept="image/*">@error('logo')<em>{{ $message }}</em>@enderror
-                @if($img('logo'))<label class="ad-check"><input type="checkbox" name="remove_logo" value="1"> Remove logo</label>@endif
-            </div>
-            <div class="ad-file">
-                <span>Favicon</span>
-                @if($img('favicon'))<img src="{{ $img('favicon') }}" alt="Current favicon" class="ad-thumb sm">@endif
-                <input type="file" name="favicon" accept="image/*">@error('favicon')<em>{{ $message }}</em>@enderror
-                @if($img('favicon'))<label class="ad-check"><input type="checkbox" name="remove_favicon" value="1"> Remove favicon</label>@endif
-            </div>
         </div>
     </section>
 

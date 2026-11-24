@@ -6,7 +6,7 @@
     '@type' => 'Organization',
     'name' => $site['site_name'] ?? 'Reganto IT Solution',
     'url' => url('/'),
-    'logo' => $site['logo'] ?? null,
+    'logo' => asset('assets/img/logo.png'),
     'email' => $site['email'] ?? null,
     'telephone' => $site['phone'] ?? null,
     'sameAs' => array_values(array_filter([$site['facebook'] ?? null, $site['instagram'] ?? null, $site['linkedin'] ?? null, $site['youtube'] ?? null, $site['tiktok'] ?? null])),

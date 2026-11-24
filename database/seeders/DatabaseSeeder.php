@@ -155,9 +155,9 @@ class DatabaseSeeder extends Seeder
 
         Blog::query()->delete();
         $blogs = [
-            ['Voice UI (VUI): Designing Experiences Beyond the Screen', 'assets/img/bg.jpg', 8],
-            ['AI in UI/UX: Practical Use-Cases That Improve Products', 'assets/img/bg2.jpg', 5],
-            ['UI/UX Trends: What Modern Products Are Doing Differently', 'assets/img/bg3.jpg', 10],
+            ['Voice UI (VUI): Designing Experiences Beyond the Screen', 'assets/img/bg.webp', 8],
+            ['AI in UI/UX: Practical Use-Cases That Improve Products', 'assets/img/bg2.webp', 5],
+            ['UI/UX Trends: What Modern Products Are Doing Differently', 'assets/img/bg3.webp', 10],
         ];
         foreach ($blogs as $i => [$t, $img, $min]) {
             Blog::create([

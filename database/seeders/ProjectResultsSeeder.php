@@ -14,7 +14,7 @@ class ProjectResultsSeeder extends Seeder
 {
     public function run(): void
     {
-        $img = fn (string $name) => 'assets/img/results/' . $name . '.png';
+        $img = fn (string $name) => 'assets/img/results/' . $name . '.webp';
 
         // Old combined poster project and removed projects.
         Project::whereIn('slug', ['storepal-product-poster-designs', 'storepal-campaign-banner', 'gadget-depo-bd-store', 'regantify-gadget-depo-bd-store', 'excellence-visa-consultancy'])->delete();

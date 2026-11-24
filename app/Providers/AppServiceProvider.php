@@ -25,9 +25,6 @@ class AppServiceProvider extends ServiceProvider
                 try {
                     if (Schema::hasTable('settings')) {
                         $data['site'] = Setting::allSettings();
-                        foreach (['logo', 'favicon'] as $k) {
-                            $data['site'][$k] = \App\Support\Media::url($data['site'][$k] ?? null);
-                        }
                         $data['navServices'] = Service::active()->with('items')->get();
                     }
                 } catch (\Throwable $e) {

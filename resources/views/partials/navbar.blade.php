@@ -1,10 +1,6 @@
 <header class="nav">
     <a class="logo" href="{{ url('/') }}">
-        @if(!empty($site['logo']))
-            <img class="logo-img" src="{{ $site['logo'] }}" alt="{{ $site['site_name'] ?? '' }}">
-        @else
-            {{ $site['site_name'] ?? 'Reganto' }}
-        @endif
+        <img class="logo-img" src="{{ asset('assets/img/logo.png') }}" alt="Reganto IT Solution">
     </a>
     <nav class="nav-pill" id="navPill" aria-label="Main">
         <a href="{{ url('/projects') }}" class="{{ request()->is('projects*') ? 'active' : '' }}">Projects</a>

@@ -33,7 +33,7 @@
     </div>
     <div class="closing-cols">
         <div class="closing-brand">
-            @if(!empty($site['logo']))<img src="{{ $site['logo'] }}" alt="{{ $site['site_name'] ?? '' }}">@endif
+            <img src="{{ asset('assets/img/logo.png') }}" alt="Reganto IT Solution">
             <b>Design • Development • Growth</b>
             <p>We craft clean UI/UX and high-performing websites for startups and businesses across United States and beyond.</p>
             <div class="closing-soc">

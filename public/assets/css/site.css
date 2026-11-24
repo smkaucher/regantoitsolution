@@ -176,7 +176,7 @@
 :root{--ink:#0f181d;--violet:#306883;--violet-2:#4b8fb0;--lav:#f1f8fc;--text:#182125;--muted:#6e777c;--line:#e8edf0;--r-lg:2rem;--r-md:1.1rem;--r-sm:.65rem;--gutter:clamp(1rem,3.6vw,7rem)}
 *{box-sizing:border-box;margin:0}
 html{font-size:clamp(16px,.8333vw,40px);scroll-behavior:smooth}
-body{font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:var(--text);background:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--text);background:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}ul{list-style:none;padding:0}
 :focus-visible{outline:3px solid var(--violet-2);outline-offset:3px}
 .page{width:100%;min-height:100vh;padding:1.2rem var(--gutter) 0}
@@ -264,7 +264,7 @@ main>section{margin-top:3.5rem}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 /* Reganto additions */
-.logo-img{height:2.3rem;width:auto;display:block}
+.logo-img{height:3.4rem;width:auto;display:block}
 .dash-logo img{height:1.8rem;background:#fff;padding:.25rem .6rem;border-radius:.5rem;display:block}
 .dash{flex-wrap:wrap}.dash small{color:#adb8be;font-size:.7rem}.dash a{opacity:.85}
 .sub{text-align:center;color:var(--muted);font-size:.9rem;margin:-1rem auto 2rem;max-width:36rem;line-height:1.6}.sub.left{text-align:left;margin:1rem 0 0}
@@ -467,13 +467,13 @@ main>section{margin-top:3.5rem}
 /* Small phones: keep the header on one line and never wider than the screen */
 @media (max-width:400px){
  .nav{gap:.3rem}
- .logo-img{height:1.9rem;max-width:9.5rem;object-fit:contain}
+ .logo-img{height:2.6rem;max-width:12rem;object-fit:contain}
  .menu-btn{margin-right:.3rem;padding:.35rem .65rem}
  .nav>.btn.btn-sm{font-size:.72rem;padding:.5rem .8rem;gap:.3rem;white-space:nowrap}
  .nav>.btn.btn-sm svg{width:14px;height:14px}
 }
 @media (max-width:340px){
- .logo-img{max-width:7.5rem}
+ .logo-img{max-width:10rem}
  .nav>.btn.btn-sm svg{display:none}
 }
 

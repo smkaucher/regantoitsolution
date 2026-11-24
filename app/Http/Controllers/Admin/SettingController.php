@@ -34,35 +34,12 @@ class SettingController extends Controller
 
     public function update(Request $request)
     {
-        $data = $request->validate(self::FIELDS + [
-            'logo' => 'nullable|image|max:2048',
-            'favicon' => 'nullable|image|max:1024',
-            'remove_logo' => 'nullable|boolean',
-            'remove_favicon' => 'nullable|boolean',
-        ]);
+        $data = $request->validate(self::FIELDS);
 
         foreach (array_keys(self::FIELDS) as $key) {
             Setting::set($key, $data[$key] ?? '');
         }
 
-        foreach (['logo', 'favicon'] as $key) {
-            if ($request->hasFile($key)) {
-                $this->deleteUploaded(Setting::get($key));
-                Setting::set($key, \App\Support\ImageOptimizer::store($request->file($key), 'settings', $key === 'logo' ? 800 : 256));
-            } elseif ($request->boolean('remove_' . $key)) {
-                $this->deleteUploaded(Setting::get($key));
-                Setting::set($key, '');
-            }
-        }
-
         return redirect()->route('admin.settings')->with('ok', 'Settings saved. The website is updated.');
-    }
-
-    /** Only files this panel uploaded (under settings/) are ever deleted. */
-    private function deleteUploaded(?string $path): void
-    {
-        if ($path && str_starts_with($path, 'settings/')) {
-            Storage::disk('public')->delete($path);
-        }
     }
 }

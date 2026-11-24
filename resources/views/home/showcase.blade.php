@@ -1,5 +1,5 @@
 @php
-    $cards = [['01', 'Web Experience', 'slide3.png'], ['02', 'Digital Product', 'slide1.jpg'], ['03', 'UI / UX Design', 'slide2.jpg'], ['04', 'Brand System', 'banner.jpg'], ['05', 'Web Experience', 'slide3.png'], ['06', 'Digital Product', 'slide1.jpg']];
+    $cards = [['01', 'Web Experience', 'slide3.webp'], ['02', 'Digital Product', 'slide1.webp'], ['03', 'UI / UX Design', 'slide2.webp'], ['04', 'Brand System', 'banner.webp'], ['05', 'Web Experience', 'slide3.webp'], ['06', 'Digital Product', 'slide1.webp']];
     $prompts = ['Design a product dashboard for my SaaS', 'Build an e-commerce website that sells', 'Create a brand identity for my startup', 'Redesign my mobile app UI/UX'];
 @endphp
 <section class="block cx" data-replay data-threshold="0.25" id="showcase">

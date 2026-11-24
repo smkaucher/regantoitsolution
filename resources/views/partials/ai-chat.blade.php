@@ -2,7 +2,7 @@
     <div class="aic-back" data-aic-close></div>
     <section class="aic-box" role="dialog" aria-modal="true" aria-label="Chat with Reganto AI">
         <header class="aic-head">
-            <span class="aic-avatar"><x-icon name="bot" size="22" /><i></i></span>
+            <span class="aic-avatar"><x-icon name="bot" size="22" /></span>
             <div class="aic-who"><b>Reganto AI</b><small>Online · ask me anything about our work</small></div>
             <button type="button" class="aic-reset" data-aic-reset title="New chat" aria-label="New chat">↺</button>
             <button type="button" class="aic-x" data-aic-close aria-label="Close chat">×</button>

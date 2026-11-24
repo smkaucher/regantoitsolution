@@ -7,7 +7,7 @@
     @php
         $seoTitle = trim($__env->yieldContent('title')) ?: (($site['site_name'] ?? 'Reganto IT Solution') . ' – One studio. Every digital possibility.');
         $seoDesc = trim($__env->yieldContent('description')) ?: ($site['tagline'] ?? '');
-        $seoImage = trim($__env->yieldContent('og_image')) ?: ($site['logo'] ?? '');
+        $seoImage = trim($__env->yieldContent('og_image')) ?: asset('assets/img/logo.png');
         $seoUrl = url()->current();
     @endphp
     <meta name="description" content="{{ Str::limit(strip_tags($seoDesc), 160) }}">
@@ -22,11 +22,7 @@
     <meta name="twitter:title" content="{{ $seoTitle }}">
     <meta name="twitter:description" content="{{ Str::limit(strip_tags($seoDesc), 200) }}">
     @if($seoImage)<meta name="twitter:image" content="{{ $seoImage }}">@endif
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    @if(!empty($site['favicon']) || !empty($site['logo']))
-        <link rel="icon" href="{{ $site['favicon'] ?: $site['logo'] }}">
-    @endif
+    <link rel="icon" href="{{ asset('assets/img/logo.png') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/site.css') }}?v={{ filemtime(public_path('assets/css/site.css')) }}">
     <link rel="stylesheet" href="{{ asset('assets/css/blade.css') }}?v={{ filemtime(public_path('assets/css/blade.css')) }}">
     @stack('head')
