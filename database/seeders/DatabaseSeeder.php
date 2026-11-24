@@ -6,7 +6,6 @@ use App\Models\Blog;
 use App\Models\Client;
 use App\Models\Faq;
 use App\Models\Project;
-use App\Models\Service;
 use App\Models\Setting;
 use App\Models\Stat;
 use App\Models\Testimonial;
@@ -53,57 +52,7 @@ class DatabaseSeeder extends Seeder
             Setting::set($k, $v);
         }
 
-        $services = [
-            'UI/UX Design' => [
-                ['Mobile App UI/UX', 'Design clean, intuitive mobile experiences that improve retention and user satisfaction.'],
-                ['Web App UI/UX', 'Build scalable interfaces and dashboards optimized for workflows and usability.'],
-                ['Website UI Design', 'Create responsive, high-performing layouts that match your brand and convert visitors.'],
-                ['SaaS Product Design', 'Design user-centered SaaS platforms with clear navigation and conversion-ready flows.'],
-                ['Landing Page Design', 'Craft high-converting landing pages with strong messaging and clean visual hierarchy.'],
-                ['UX Audits & Improvements', 'Identify friction points, optimize flows, and improve performance with actionable insights.'],
-            ],
-            'Development' => [
-                ['Frontend Development', 'Build fast, responsive UIs using modern stacks and best practices.'],
-                ['Backend Development', 'Develop secure, scalable systems with clean architecture.'],
-                ['Full-Stack Development', 'Get end-to-end delivery with integration, testing, and deployment support.'],
-                ['Mobile Development', 'Create high-quality mobile apps tailored for speed, reliability, and smooth UX.'],
-                ['E-commerce Development', 'Launch feature-rich stores with conversion-first UX, secure payments, and custom workflows.'],
-            ],
-            'Branding' => [
-                ['Brand Strategy', 'Define your positioning, messaging, and tone to stand out and build trust.'],
-                ['Visual Identity', 'Shape logo, typography, and color systems for clarity and recognition.'],
-                ['Brand Collateral', 'Produce professional decks, social templates, and marketing assets.'],
-                ['Content Direction', 'Guide visuals and copy to keep everything consistently on-brand.'],
-                ['Brand Refresh', 'Modernize your identity while preserving core recognition.'],
-            ],
-            'Marketing' => [
-                ['SEO & Content', 'Rank higher on search with technical SEO, keyword strategy and content that earns trust.'],
-                ['Paid Ads', 'Run Google and Meta ad campaigns tuned for leads and sales, not just clicks.'],
-                ['Social Media Marketing', 'Plan, design and post consistently to grow an engaged audience on every platform.'],
-                ['Email & WhatsApp Campaigns', 'Reach customers directly with well-timed, personalised messages.'],
-                ['Analytics & Reporting', 'Track what works with clear dashboards and monthly reports.'],
-            ],
-            'Cyber Security' => [
-                ['Penetration Testing', 'Find and fix weaknesses in your website, app or network before attackers do.'],
-                ['Vulnerability Assessment', 'Scan and review your systems, then get a clear, prioritised fix list.'],
-                ['Secure Code Review', 'Check your code against OWASP risks and harden it before release.'],
-                ['Network & Server Security', 'Lock down servers, firewalls and access so your infrastructure stays safe.'],
-                ['Incident Response', 'Get fast help to contain a breach, recover and prevent it happening again.'],
-            ],
-        ];
-        $i = 0;
-        foreach ($services as $title => $items) {
-            $s = Service::updateOrCreate(['slug' => Str::slug($title)], [
-                'title' => $title,
-                'short_description' => "Professional {$title} services tailored to your business.",
-                'details' => "<p>{$title} by the Reganto IT Solution team.</p>",
-                'sort_order' => ++$i,
-            ]);
-            $s->items()->delete();
-            foreach ($items as $j => [$it, $desc]) {
-                $s->items()->create(['title' => $it, 'description' => $desc, 'sort_order' => $j + 1]);
-            }
-        }
+        $this->call(ServicesSeeder::class);
 
         $projects = [
             ['StorePal E-Commerce Store', 'Web Development', 'https://storepal.com.bd/', true],

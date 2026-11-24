@@ -4,7 +4,7 @@
     <div class="hero-rings" aria-hidden="true"><i></i></div>
 
     <div class="hero-copy">
-        <small class="pg-crumb" data-a="up" style="--d:.05s"><a href="{{ url('/') }}">Home</a> / {{ $crumb ?? $title }}</small>
+        <small class="pg-crumb" data-a="up" style="--d:.05s"><a href="{{ url('/') }}">Home</a> / @isset($crumbHtml){!! $crumbHtml !!}@else{{ $crumb ?? $title }}@endisset</small>
         <h1>
             <span class="hl"><span data-a="line" style="--d:.17s">{{ $title }}</span></span>
         </h1>

@@ -1,5 +1,5 @@
 @if($faqs->count())
-<section class="block faq" id="faq" data-replay data-threshold="0.2">
+<section class="block faq" data-replay data-threshold="0.2">
     <h2 data-a="up" style="--d:0s">Frequently Asked Questions</h2>
     @foreach($faqs as $i => $f)
         <details data-a="up" style="--d:{{ 0.07 + $i * 0.07 }}s">

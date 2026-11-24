@@ -11,6 +11,13 @@ class Service extends Model
 
     protected $casts = ['is_active' => 'boolean'];
 
+    protected static function booted(): void
+    {
+        // The top bar and footer list the categories from a cache (see AppServiceProvider).
+        static::saved(fn () => \Illuminate\Support\Facades\Cache::forget('nav.services'));
+        static::deleted(fn () => \Illuminate\Support\Facades\Cache::forget('nav.services'));
+    }
+
     public function items(): HasMany
     {
         return $this->hasMany(ServiceItem::class)->orderBy('sort_order');

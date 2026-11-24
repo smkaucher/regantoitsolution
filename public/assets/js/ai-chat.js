@@ -7,7 +7,7 @@
   var input = document.getElementById('aicInput');
   var chips = document.getElementById('aicChips');
   var KEY = 'rg_ai_chat_v1';
-  var WELCOME = "Hi! I'm Reganto AI. Ask me about our services, projects, team, pricing, location or how to book.";
+  var WELCOME = t("Hi! I'm Reganto AI. Ask me about our services, projects, team, pricing, location or how to book.");
   var msgs = [];
   var busy = false;
 
@@ -73,7 +73,7 @@
       body: JSON.stringify({ message: text, history: history })
     }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function (j) { return { reply: j.reply, wa: j.whatsapp || '' }; })
-      .catch(function () { return { reply: 'Sorry, I could not answer right now. Please message us on WhatsApp or use the Contact page.', wa: '' }; })
+      .catch(function () { return { reply: t('Sorry, I could not answer right now. Please message us on WhatsApp or use the Contact page.'), wa: '' }; })
       .then(function (reply) {
         var wait = Math.max(0, 600 - (Date.now() - started));
         setTimeout(function () {

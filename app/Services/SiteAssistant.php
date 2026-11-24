@@ -99,7 +99,9 @@ class SiteAssistant
 
     private function systemPrompt(): string
     {
-        return "You are Reganto AI, the friendly sales-minded assistant on the website of {$this->facts()['name']}, a digital studio in Dhaka, Bangladesh.
+        $bn = app()->getLocale() === 'bn' ? "SITE LANGUAGE: the visitor is on the Bangla version of the website, so default to simple Bangla script unless they write in English.
+" : '';
+        return $bn . "You are Reganto AI, the friendly sales-minded assistant on the website of {$this->facts()['name']}, a digital studio in Dhaka, Bangladesh.
 "
             . "GOAL: help every visitor, make a great impression, and turn interest into a project: guide them to share their idea and contact the team.
 "
@@ -186,6 +188,23 @@ FACTS:
 
     /* ---------------- Free local engine ---------------- */
 
+    /** A fixed sentence in the visitor's language. :name placeholders are filled from $vars. */
+    private function tr(string $en, array $vars = []): string
+    {
+        $text = app()->getLocale() === 'bn' ? (\App\Support\Translator::lookup($en) ?? $en) : $en;
+        foreach ($vars as $k => $v) {
+            $text = str_replace(':' . $k, (string) $v, $text);
+        }
+
+        return $text;
+    }
+
+    /** A name taken from the data (service, project, category) in the visitor's language. */
+    private function x(string $text): string
+    {
+        return app()->getLocale() === 'bn' ? \App\Support\Translator::text($text) : $text;
+    }
+
     private function localReply(string $message): string
     {
         $f = $this->facts();
@@ -194,63 +213,72 @@ FACTS:
 
         // A specific service by its full name.
         foreach ($f['services'] as $svc) {
-            if (str_contains($q, mb_strtolower($svc->title))) {
-                return "{$svc->title}: " . $svc->items->pluck('title')->implode(', ') . ".\nDetails: /services/{$svc->slug}\nTo book, " . $this->bookLine();
+            if (str_contains($q, mb_strtolower($svc->title)) || str_contains($q, mb_strtolower($this->x($svc->title)))) {
+                return $this->x($svc->title) . ': ' . $svc->items->pluck('title')->map(fn ($t) => $this->x($t))->implode(', ') . ".\n"
+                    . $this->tr('Details: :link', ['link' => "/services/{$svc->slug}"]) . "\n"
+                    . $this->tr('To book, :book', ['book' => $this->bookLine()]);
             }
         }
 
         if ($has(['hi', 'hello', 'hey', 'salam', 'assalam', 'assalamu', 'হাই', 'হ্যালো', 'সালাম']) && mb_strlen($q) < 25) {
-            return "Hi! I'm Reganto AI. Ask me about our services, projects, team, pricing or how to book.";
+            return $this->tr("Hi! I'm Reganto AI. Ask me about our services, projects, team, pricing or how to book.");
         }
         if ($has(['whatsapp', 'phone', 'call', 'email', 'mail', 'contact', 'number', 'reach', 'যোগাযোগ', 'নম্বর', 'ফোন', 'jogajog', 'nombor', 'number'])) {
             return $this->contactLine();
         }
-        if ($has(['address', 'location', 'office', 'where', 'map', 'visit', 'ঠিকানা', 'কোথায়', 'thikana', 'kothay', 'ofis'])) {
-            return "Our office: {$f['address']}.\nMap: {$f['map']}";
+        if ($has(['address', 'location', 'office', 'where', 'map', 'visit', 'ঠিকানা', 'কোথায়', 'অফিস', 'thikana', 'kothay', 'ofis'])) {
+            return $this->tr("Our office: :address.\nMap: :map", ['address' => $this->x($f['address']), 'map' => $f['map']]);
         }
-        if ($has(['book', 'hire', 'order', 'start', 'quote', 'বুক', 'kinbo', 'korte chai'])) {
-            return 'This chat only shares information and cannot confirm a project. Please get your requirement ready (service, features, budget, deadline, name, phone) and send it on WhatsApp for confirmation' . ($this->facts()['whatsapp'] ? ' (' . $this->facts()['whatsapp'] . ')' : '') . '. We reply within 30 minutes.';
+        if ($has(['book', 'hire', 'order', 'start', 'quote', 'বুক', 'শুরু', 'অর্ডার', 'কিনব', 'kinbo', 'korte chai'])) {
+            return $this->tr('This chat only shares information and cannot confirm a project. Please get your requirement ready (service, features, budget, deadline, name, phone) and send it on WhatsApp for confirmation:wa. We reply within 30 minutes.', [
+                'wa' => $f['whatsapp'] ? ' (' . $f['whatsapp'] . ')' : '',
+            ]);
         }
         if ($has(['price', 'cost', 'pricing', 'budget', 'charge', 'rate', 'how much', 'দাম', 'খরচ', 'টাকা', 'dam', 'khoroch', 'taka', 'koto'])) {
-            return 'Pricing depends on the scope of each project, so we give a custom quote. To proceed, get your requirement ready and send it on WhatsApp for confirmation' . ($this->facts()['whatsapp'] ? ' (' . $this->facts()['whatsapp'] . ')' : '') . '; the chat cannot confirm projects.';
+            return $this->tr('Pricing depends on the scope of each project, so we give a custom quote. To proceed, get your requirement ready and send it on WhatsApp for confirmation:wa; the chat cannot confirm projects.', [
+                'wa' => $f['whatsapp'] ? ' (' . $f['whatsapp'] . ')' : '',
+            ]);
         }
         if ($has(['project', 'portfolio', 'work', 'case', 'example', 'প্রজেক্ট', 'কাজ', 'kaj', 'projekt'])) {
             $list = $f['projects']->reject(fn ($p) => in_array($p->category, ['Graphics Design', 'Branding'], true))
-                ->take(5)->map(fn ($p) => "• {$p->title} ({$p->category})")->implode("\n");
+                ->take(5)->map(fn ($p) => '• ' . $this->x($p->title) . ' (' . $this->x((string) $p->category) . ')')->implode("\n");
 
-            return "Some of our recent work:\n{$list}\n\nWe also design posters and brand banners. Filter everything on the Projects page (/projects) and click a project to see its details.";
+            return $this->tr('Some of our recent work:') . "\n{$list}\n\n"
+                . $this->tr('We also design posters and brand banners. Filter everything on the Projects page (/projects) and click a project to see its details.');
         }
         if ($has(['service', 'offer', 'what do you', 'what can', 'ui', 'ux', 'web', 'develop', 'software', 'app', 'brand', 'graphic', 'design', 'সার্ভিস', 'সেবা', 'sheba', 'seba', 'ki ki'])) {
-            $list = $f['services']->map(fn ($s) => "• {$s->title}: " . $s->items->take(4)->pluck('title')->implode(', '))->implode("\n");
+            $list = $f['services']->map(fn ($s) => '• ' . $this->x($s->title) . ': ' . $s->items->take(4)->pluck('title')->map(fn ($t) => $this->x($t))->implode(', '))->implode("\n");
 
-            return "We offer:\n{$list}\n\nSee all on the Services page (/services).";
+            return $this->tr('We offer:') . "\n{$list}\n\n" . $this->tr('See all on the Services page (/services).');
         }
         if ($has(['team', 'who', 'founder', 'developer', 'designer', 'expert', 'টিম', 'kara', 'tim'])) {
-            return "Our team has {$f['team']} designers and engineers. Meet them, with their skills and experience, on the Team page (/team).";
+            return $this->tr('Our team has :n designers and engineers. Meet them, with their skills and experience, on the Team page (/team).', ['n' => $f['team']]);
         }
         if ($has(['about', 'company', 'reganto', 'studio', 'কোম্পানি'])) {
-            return "{$f['name']} is a digital studio: one team for UI/UX design, web and software development, graphics and branding, from first sketch to launch. Learn more on the About page (/about).";
+            return $this->tr(':name is a digital studio: one team for UI/UX design, web and software development, graphics and branding, from first sketch to launch. Learn more on the About page (/about).', ['name' => $f['name']]);
         }
         if ($has(['time', 'how long', 'delivery', 'deadline', 'support', 'reply', 'respond', 'সময়'])) {
-            return 'We reply within 30 minutes. Delivery time depends on the project size, and we share a clear timeline in the quote. To start, ' . $this->bookLine();
+            return $this->tr('We reply within 30 minutes. Delivery time depends on the project size, and we share a clear timeline in the quote. To start, :book', ['book' => $this->bookLine()]);
         }
         if ($has(['thank', 'thanks', 'ধন্যবাদ'])) {
-            return "You're welcome! Anything else I can help with?";
+            return $this->tr("You're welcome! Anything else I can help with?");
         }
 
-        return 'I can help with our services, projects, team, pricing, location and booking. For anything else, ' . $this->bookLine();
+        return $this->tr('I can help with our services, projects, team, pricing, location and booking. For anything else, :book', ['book' => $this->bookLine()]);
     }
 
     private function bookLine(): string
     {
         $f = $this->facts();
         $ways = array_values(array_filter([
-            $f['whatsapp'] ? "WhatsApp ({$f['whatsapp']})" : null,
-            $f['email'] ? "email {$f['email']}" : null,
-            $f['phone'] ? "call {$f['phone']}" : null,
+            $f['whatsapp'] ? $this->tr('WhatsApp (:v)', ['v' => $f['whatsapp']]) : null,
+            $f['email'] ? $this->tr('email :v', ['v' => $f['email']]) : null,
+            $f['phone'] ? $this->tr('call :v', ['v' => $f['phone']]) : null,
         ]));
 
-        return $ways ? 'message us on ' . implode(', or ', $ways) . '. We reply within 30 minutes.' : 'use the Contact page (/contact). We reply within 30 minutes.';
+        return $ways
+            ? $this->tr('message us on :ways. We reply within 30 minutes.', ['ways' => implode($this->tr(', or '), $ways)])
+            : $this->tr('use the Contact page (/contact). We reply within 30 minutes.');
     }
 
     private function contactLine(): string
@@ -259,10 +287,10 @@ FACTS:
         $out = [];
         foreach (['whatsapp' => 'WhatsApp', 'email' => 'Email', 'phone' => 'Phone'] as $k => $label) {
             if ($f[$k]) {
-                $out[] = "{$label}: {$f[$k]}";
+                $out[] = $this->tr($label) . ": {$f[$k]}";
             }
         }
 
-        return ($out ? implode("\n", $out) . "\n" : '') . "Office: {$f['address']}\nWe reply within 30 minutes.";
+        return ($out ? implode("\n", $out) . "\n" : '') . $this->tr("Office: :address\nWe reply within 30 minutes.", ['address' => $this->x($f['address'])]);
     }
 }

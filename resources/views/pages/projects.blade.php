@@ -79,8 +79,8 @@
         $('pmSum').textContent = d.summary || '';
         $('pmDesc').innerHTML = d.description || '';
         var meta = '';
-        if (d.client) meta += '<li><b>Client</b><span>' + esc(d.client) + '</span></li>';
-        if (d.category) meta += '<li><b>Category</b><span>' + esc(d.category) + '</span></li>';
+        if (d.client) meta += '<li><b>' + t('Client') + '</b><span>' + esc(d.client) + '</span></li>';
+        if (d.category) meta += '<li><b>' + t('Category') + '</b><span>' + esc(d.category) + '</span></li>';
         $('pmMeta').innerHTML = meta;
         var v = $('pmVisit'); v.hidden = !d.url; if (d.url) v.href = d.url;
 

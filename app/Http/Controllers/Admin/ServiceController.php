@@ -77,7 +77,9 @@ class ServiceController extends Controller
             'remove_image' => 'nullable|boolean',
             'sort_order' => 'nullable|integer|min:0|max:65535',
             'is_active' => 'nullable|boolean',
-            'items' => 'nullable|array|max:40',
+            'items' => 'nullable|array|max:60',
+            'items.*.id' => 'nullable|integer',
+            'items.*.points' => 'nullable|string|max:8000',
             'items.*.title' => 'nullable|string|max:150',
             'items.*.description' => 'nullable|string|max:600',
         ]);
@@ -117,21 +119,44 @@ class ServiceController extends Controller
         return $slug;
     }
 
+    /** Updates the service items in place so each one keeps its slug, picture and points. */
     private function syncItems(Service $service, array $items): void
     {
-        $service->items()->delete();
+        $existing = $service->items()->get()->keyBy('id');
+        $kept = [];
         $order = 0;
         foreach ($items as $item) {
             $title = trim($item['title'] ?? '');
             if ($title === '') {
                 continue;
             }
-            $service->items()->create([
+            $values = [
                 'title' => $title,
                 'description' => trim($item['description'] ?? '') ?: null,
+                'points' => array_values(array_filter(array_map('trim', preg_split('/\R/', $item['points'] ?? '')))),
                 'sort_order' => $order++,
-            ]);
+            ];
+            $row = $existing->get((int) ($item['id'] ?? 0));
+            if ($row) {
+                $row->update($values);
+                $kept[] = $row->id;
+            } else {
+                $kept[] = $service->items()->create($values + ['slug' => $this->uniqueItemSlug($service, $title)])->id;
+            }
         }
+        $service->items()->whereNotIn('id', $kept)->delete();
+    }
+
+    private function uniqueItemSlug(Service $service, string $title): string
+    {
+        $base = Str::slug($title) ?: 'service';
+        $slug = $base;
+        $i = 2;
+        while ($service->items()->where('slug', $slug)->exists()) {
+            $slug = $base . '-' . $i++;
+        }
+
+        return $slug;
     }
 
     /** Only files uploaded through this panel (under services/) are removed. */

@@ -1,0 +1,698 @@
+01. Development
+Core Technical Services
+1. Business Website Development
+Complete corporate and business digital presence.
+- Custom Website Design & Development
+- Frontend Development
+- Backend Development
+- Admin Dashboard
+- Dynamic Content Management System (CMS)
+- Company Profile & About Us Pages
+- Service & Product Showcase
+- Contact & Inquiry Management
+- Customer Registration & Login
+- Lead Management System
+- Appointment & Consultation Booking
+- Live Chat Integration
+- WhatsApp Integration
+- Email & SMS Notifications
+- Blog & News Management
+- SEO-friendly Architecture
+- Google Analytics Integration
+- CRM Integration
+- AI Website Assistant
+- Multilingual Website
+- Payment Integration (where applicable)
+- Mobile Responsive Design
+- Domain, Hosting & Deployment
+- Website Security & Maintenance
+2. E-commerce Platform Development
+Complete online shopping business ecosystem.
+- Custom E-commerce Frontend
+- Backend & Database Development
+- Admin Dashboard
+- Customer Dashboard
+- Vendor Dashboard
+- Product & Category Management
+- Product Variations & Attributes
+- Shopping Cart & Wishlist
+- Checkout System
+- Order Management System
+- Customer Management System
+- Vendor & Seller Management
+- Inventory & Stock Management
+- POS Integration
+- Warehouse Management
+- Multi-warehouse Stock Management
+- Coupon & Discount Management
+- Loyalty & Reward Points
+- Payment Gateway Integration
+- bKash, Nagad, SSLCommerz & Card Payment Integration
+- Courier & Delivery Integration
+- Parcel Tracking System
+- Order Status Notifications
+- Return, Refund & Exchange Management
+- Invoice & Receipt Generation
+- Sales & Revenue Analytics
+- Accounting & ERP Integration
+- CRM Integration
+- LMS Integration (for training or digital-course businesses)
+- Android & iOS Shopping Apps
+- Vendor Mobile App
+- Delivery Rider App
+- REST API Development
+- Third-party API Integration
+- AI Product Recommendations
+- AI Shopping Assistant
+- AI Customer Support Chatbot
+- AI-powered Product Search
+- Automated Order Processing
+- Automated Marketing & Follow-ups
+- Facebook Pixel & Conversion API
+- Google Analytics & Tag Manager
+- SEO & Performance Optimization
+- Security, Backup & Maintenance
+3. Multi-vendor Marketplace Development
+A complete marketplace for multiple sellers and customers.
+- Marketplace Frontend Development
+- Backend & Database Architecture
+- Super Admin Dashboard
+- Seller/Vendor Dashboard
+- Customer Dashboard
+- Vendor Registration & Verification
+- Vendor Subscription Plans
+- Individual Seller Stores
+- Product Listing & Management
+- Product Approval System
+- Order Distribution
+- Vendor-wise Order Management
+- Commission Management
+- Seller Payout & Settlement
+- Payment Gateway Integration
+- Courier Integration
+- Delivery Tracking
+- POS & Inventory Integration
+- Vendor Analytics & Reports
+- Customer Reviews & Ratings
+- Dispute & Refund Management
+- Affiliate & Referral System
+- Android & iOS Apps
+- Seller Mobile App
+- Customer Mobile App
+- Marketplace API
+- AI Product Recommendations
+- AI Shopping Chatbot
+- Automated Seller Notifications
+- Marketing & SEO Integration
+- Security & Scalability
+4. CRM Software Development
+Customer relationship and sales management ecosystem.
+- Custom CRM Frontend & Backend
+- Admin & Employee Dashboard
+- Customer Database Management
+- Lead Management
+- Lead Assignment & Tracking
+- Sales Pipeline Management
+- Contact & Company Management
+- Customer Interaction History
+- Follow-up Scheduling
+- Task & Reminder Management
+- Sales Team Management
+- Deal & Opportunity Tracking
+- Quotation & Proposal Management
+- Invoice Integration
+- Email Integration
+- WhatsApp Integration
+- SMS Notifications
+- Call & Communication Logs
+- Customer Support Ticket System
+- Customer Segmentation
+- Sales Analytics & Reports
+- Mobile CRM Application
+- Third-party API Integration
+- AI Lead Scoring
+- AI Sales Assistant
+- Automated Follow-ups
+- AI Customer Support
+- Role-based Access Control
+5. ERP Software Development
+Complete enterprise resource planning system.
+- Custom ERP Frontend & Backend
+- Centralized Admin Dashboard
+- HR & Employee Management
+- Payroll Management
+- Accounting & Finance
+- Sales & Purchase Management
+- Inventory Management
+- Warehouse Management
+- Supplier Management
+- Customer Management
+- POS Integration
+- CRM Integration
+- Procurement Management
+- Production & Manufacturing Management
+- Project Management
+- Branch & Multi-location Management
+- Reporting & Analytics
+- Approval & Workflow Management
+- Document Management
+- Mobile ERP Application
+- API & Third-party Integration
+- AI Business Reporting
+- Automated Business Workflows
+- Role & Permission Management
+6. POS & Inventory Management Software
+- Web-based POS System
+- Desktop POS Application
+- Android POS Application
+- Barcode & QR Scanner Integration
+- Thermal Printer Integration
+- Receipt & Invoice Generation
+- Product & Category Management
+- Stock Management
+- Purchase & Supplier Management
+- Sales & Return Management
+- Multi-branch Management
+- Multi-warehouse Management
+- Customer Database
+- Employee & Cashier Management
+- Shift & Cash Management
+- Offline POS Support
+- E-commerce Synchronization
+- Accounting Integration
+- ERP & CRM Integration
+- Sales Analytics
+- Low-stock Notifications
+- AI Sales Forecasting
+7. School & Educational Management System
+- School Website Development
+- Student Admission Portal
+- Student & Guardian Dashboard
+- Teacher Dashboard
+- Admin Dashboard
+- Student Information Management
+- Class & Section Management
+- Attendance Management
+- Examination & Result Management
+- Online Admission System
+- Fee & Payment Management
+- Accounts & Payroll
+- Timetable Management
+- Assignment & Homework Management
+- Library Management
+- Transport Management
+- Parent Communication Portal
+- SMS & Email Notifications
+- Online Examination System
+- LMS Integration
+- Live Class Integration
+- Android & iOS Apps
+- Parent Mobile App
+- Teacher Mobile App
+- AI Learning Assistant
+- AI Student Support Chatbot
+- Automated Result & Attendance Reports
+8. Hospital & Clinic Management System
+- Hospital Website & Patient Portal
+- Doctor Dashboard
+- Patient Dashboard
+- Admin Dashboard
+- Appointment Booking
+- Doctor Schedule Management
+- Electronic Medical Records (EMR)
+- Patient History Management
+- Prescription Management
+- Pharmacy Management
+- Laboratory Management
+- Diagnostic Report Management
+- Billing & Payment
+- Bed & Ward Management
+- Staff Management
+- Inventory Management
+- Insurance Management
+- Telemedicine Integration
+- Patient Notifications
+- Doctor & Patient Mobile Apps
+- AI Patient Support Assistant
+- Secure Data Access & Audit Logs
+- Backup & Data Protection
+9. Courier & Logistics Management System
+- Courier Company Website
+- Customer Dashboard
+- Merchant Dashboard
+- Admin Dashboard
+- Branch Management
+- Parcel Booking System
+- Parcel Tracking System
+- Consignment Management
+- Pickup Request Management
+- Delivery Assignment
+- Rider Management
+- Rider Mobile App
+- Merchant Mobile App
+- Delivery Route Management
+- Cash on Delivery (COD) Management
+- Payment & Settlement Management
+- Return Parcel Management
+- Warehouse & Hub Management
+- SMS & Email Notifications
+- API Integration with E-commerce
+- Live Tracking Integration
+- Automated Delivery Updates
+- AI Delivery Optimization
+- Performance & Revenue Analytics
+10. Restaurant Management System
+- Restaurant Website
+- Online Food Ordering
+- Digital Menu & QR Menu
+- Customer Dashboard
+- Admin Dashboard
+- Kitchen Display System
+- POS Integration
+- Table & Reservation Management
+- Order Management
+- Food Delivery Management
+- Waiter & Staff Management
+- Kitchen Management
+- Inventory & Ingredient Tracking
+- Supplier Management
+- Payment Integration
+- Delivery Partner Integration
+- Customer Loyalty Program
+- Android & iOS Ordering App
+- AI Food Recommendation
+- AI Customer Support
+- Sales & Performance Analytics
+11. Hotel Management System
+- Hotel Website
+- Online Room Booking
+- Reservation Management
+- Guest Management
+- Front Desk Dashboard
+- Room & Housekeeping Management
+- Check-in & Check-out
+- Billing & Payment
+- Restaurant & POS Integration
+- Staff Management
+- Booking Channel Integration
+- Customer Mobile App
+- Booking Notifications
+- CRM Integration
+- AI Booking Assistant
+- Revenue & Occupancy Analytics
+12. Booking & Appointment Platform
+- Appointment Booking Website
+- Customer Dashboard
+- Service Provider Dashboard
+- Admin Dashboard
+- Service & Schedule Management
+- Real-time Availability
+- Calendar Integration
+- Booking & Cancellation
+- Queue Management
+- Token Management
+- Online Payment
+- SMS & Email Reminders
+- WhatsApp Notifications
+- Staff & Employee Scheduling
+- Android & iOS Apps
+- AI Booking Assistant
+- Automated Customer Follow-ups
+- Booking Analytics
+13. Real Estate Management Platform
+- Real Estate Website
+- Property Listing Management
+- Property Search & Filters
+- Property Details Pages
+- Agent Dashboard
+- Customer Dashboard
+- Property Inquiry Management
+- Appointment Booking
+- Property CRM
+- Lead Management
+- Document Management
+- Payment & Booking Management
+- Map Integration
+- Android & iOS Apps
+- AI Property Recommendations
+- AI Customer Assistant
+- Analytics & Reporting
+14. SaaS & Custom Software Development
+- SaaS Product Architecture
+- Multi-tenant Architecture
+- Custom Frontend & Backend
+- Subscription Management
+- Membership Management
+- Recurring Billing
+- Payment Gateway Integration
+- User & Role Management
+- Admin Dashboard
+- API Development
+- Third-party Integrations
+- Cloud Deployment
+- Usage & Analytics Tracking
+- Mobile App Integration
+- AI Features & Automation
+- Security & Data Isolation
+- Scalability & Maintenance
+
+02. Design & Branding
+Creative & Product Design
+1. Website UI/UX Design
+- Business Website UI Design
+- Corporate Website Design
+- E-commerce Website Design
+- Landing Page Design
+- SaaS Dashboard Design
+- Web Application Interface Design
+- Responsive Mobile & Desktop Layout
+- User Journey Mapping
+- Wireframing
+- Interactive Prototyping
+- Design System Creation
+- Typography & Color System
+- User Experience Research
+- Usability Testing
+- UX Audit & Improvement
+- Developer-ready Figma Design
+2. Mobile App UI/UX Design
+- Android App Interface Design
+- iOS App Interface Design
+- E-commerce App Design
+- Business App Design
+- Banking & Fintech App Design
+- Booking App Design
+- Delivery App Design
+- Dashboard & Analytics UI
+- User Flow Design
+- Wireframes & Prototypes
+- Design System
+- Interactive App Prototypes
+- App Usability Testing
+3. Dashboard & SaaS Product Design
+- Admin Dashboard Design
+- CRM Dashboard Design
+- ERP Dashboard Design
+- POS Interface Design
+- Analytics Dashboard
+- Vendor Dashboard
+- Customer Portal Design
+- Employee Dashboard
+- SaaS Application UI
+- Data Visualization
+- UX Research & Testing
+- Component Library Design
+4. Logo & Brand Identity Design
+- Logo Design
+- Brand Mark & Symbol Design
+- Brand Color Palette
+- Typography Selection
+- Brand Strategy
+- Brand Guidelines
+- Visual Identity System
+- Corporate Identity
+- Brand Positioning
+- Brand Refresh & Redesign
+- Stationery Design
+- Business Card Design
+- Letterhead & Envelope Design
+5. Marketing & Graphic Design
+- Social Media Post Design
+- Facebook & Instagram Ad Creative
+- YouTube Thumbnail Design
+- Website Banner Design
+- Promotional Banner
+- Campaign Creative
+- Product Advertisement Design
+- Brochure & Flyer
+- Company Profile Design
+- Business Presentation
+- Product Catalogue
+- Infographic Design
+- Packaging & Label Design
+- Billboard & Print Design
+6. Video & Motion Graphics Design
+- Promotional Video Design
+- Brand Introduction Video
+- Product Advertisement Video
+- Explainer Video
+- 2D Motion Graphics
+- Logo Animation
+- Animated Social Media Ads
+- Reels & Shorts Editing
+- YouTube Video Editing
+- Corporate Video Editing
+- Product Showcase Video
+- Video Intro & Outro
+- Motion Graphics Templates
+
+03. Digital Marketing
+Business Growth & Customer Acquisition
+1. Search Engine Optimization (SEO)
+- Complete Website SEO Audit
+- Technical SEO
+- On-page SEO
+- Off-page SEO
+- Keyword Research
+- Competitor Analysis
+- SEO Content Strategy
+- Website Speed Optimization
+- Image SEO
+- Schema Markup
+- Internal Linking
+- Backlink Strategy
+- Local SEO
+- Google Business Profile Optimization
+- E-commerce SEO
+- Product Page SEO
+- Blog SEO
+- SEO Performance Reporting
+2. Google Ads & PPC Marketing
+- Google Search Ads
+- Google Display Ads
+- Google Shopping Ads
+- YouTube Ads
+- Remarketing Campaigns
+- Performance Max Campaigns
+- Keyword & Audience Research
+- Ad Copywriting
+- Landing Page Optimization
+- Conversion Tracking
+- Google Tag Manager Setup
+- Google Analytics Integration
+- Campaign Budget Management
+- ROI & Performance Reporting
+3. Facebook & Instagram Advertising
+- Meta Business Manager Setup
+- Facebook Ads Campaign
+- Instagram Ads Campaign
+- Lead Generation Ads
+- Sales Conversion Campaigns
+- Traffic Campaigns
+- Awareness Campaigns
+- Retargeting Campaigns
+- Custom Audience Setup
+- Lookalike Audience Strategy
+- Facebook Pixel Setup
+- Meta Conversion API
+- Product Catalogue Ads
+- Dynamic Product Ads
+- Ad Creative Strategy
+- Campaign Optimization
+- ROAS Reporting
+4. Lead Generation & Sales Growth
+- B2B Lead Generation
+- B2C Lead Generation
+- Target Audience Research
+- Competitor Research
+- Lead Funnel Development
+- Landing Page Development
+- Lead Capture Forms
+- CRM Integration
+- Lead Qualification
+- Email Follow-up Automation
+- WhatsApp Lead Integration
+- Sales Funnel Optimization
+- Conversion Rate Optimization
+- Lead Performance Reporting
+5. Content & Email Marketing
+- Content Marketing Strategy
+- Blog Marketing
+- SEO Content Marketing
+- Email Campaign Design
+- Email Newsletter
+- Automated Email Sequences
+- Customer Retention Campaigns
+- Promotional Email Campaigns
+- Customer Segmentation
+- Email Automation
+- Email Performance Analytics
+6. YouTube & Video Marketing
+- YouTube Channel Strategy
+- Channel SEO
+- Video SEO
+- YouTube Ads
+- Video Content Strategy
+- Thumbnail Strategy
+- Audience Growth Campaigns
+- Video Performance Analytics
+- Channel Optimization
+7. Marketing Analytics & Tracking
+- Google Analytics 4 Setup
+- Google Tag Manager Setup
+- Facebook Pixel
+- Meta Conversion API
+- Google Search Console
+- E-commerce Event Tracking
+- Conversion Tracking
+- Custom Analytics Dashboard
+- Sales Funnel Tracking
+- Campaign Performance Reports
+- Customer Behavior Analysis
+- Marketing ROI Reporting
+
+04. Cyber Security
+Security & Protection
+1. Website Security
+- Website Security Assessment
+- Website Vulnerability Assessment
+- Authorized Penetration Testing
+- Secure Code Review
+- SQL Injection Assessment
+- XSS Vulnerability Assessment
+- Authentication Security Review
+- Access Control Assessment
+- Security Configuration
+- HTTPS & SSL Configuration
+- Website Firewall Configuration
+- Malware Detection & Removal
+- Security Patch Management
+- Security Monitoring
+2. Network & Server Security
+- Network Security Assessment
+- Firewall Configuration
+- Server Security Hardening
+- Linux Server Security
+- Windows Server Security
+- Cloud Security Assessment
+- Access Control Management
+- Network Monitoring
+- Secure Remote Access
+- Server Backup Strategy
+- Security Log Monitoring
+3. Application & API Security
+- Web Application Security Testing
+- Mobile Application Security Testing
+- API Security Assessment
+- Authentication & Authorization Review
+- Data Encryption Review
+- Secure Database Configuration
+- Session Security Review
+- Third-party Integration Security
+- Security Testing & Reporting
+4. Data Protection & Recovery
+- Data Protection Strategy
+- Automated Backup Configuration
+- Database Backup
+- Cloud Backup
+- Disaster Recovery Planning
+- Data Access Management
+- Data Encryption
+- Recovery Testing
+- Business Continuity Planning
+5. Security Monitoring & Consultation
+- Security Awareness Training
+- Security Policy Development
+- Risk Assessment
+- Incident Response Planning
+- Security Audit Reports
+- Security Compliance Gap Assessment
+- Ongoing Security Monitoring
+- Security Consultation
+
+05. Social Media Management
+Social Media Growth & Brand Management
+1. Facebook Page Management
+- Facebook Business Page Setup
+- Page Optimization
+- Profile & Cover Design
+- Content Calendar Planning
+- Regular Post Publishing
+- Promotional Post Design
+- Facebook Reels
+- Story Management
+- Comment & Inbox Management
+- Customer Inquiry Handling
+- Community Management
+- Audience Engagement
+- Facebook Group Management
+- Page Growth Strategy
+- Performance Analytics
+2. Instagram Management
+- Instagram Business Account Setup
+- Profile Optimization
+- Bio & Highlights Design
+- Instagram Feed Planning
+- Creative Post Design
+- Carousel Content
+- Reels Creation & Publishing
+- Instagram Story Management
+- Hashtag Research
+- Comment & DM Management
+- Influencer Collaboration
+- Audience Engagement
+- Instagram Growth Strategy
+- Performance Analytics
+3. LinkedIn Management
+- Company Page Setup
+- Company Profile Optimization
+- Professional Content Strategy
+- Corporate Post Design
+- Industry-related Content
+- Employee Branding
+- Executive Personal Branding
+- LinkedIn Community Engagement
+- B2B Audience Growth
+- Lead Generation Support
+- Analytics & Reporting
+4. TikTok Management
+- TikTok Account Setup
+- Profile Optimization
+- Short-form Video Strategy
+- TikTok Video Editing
+- Trending Content Research
+- Creative Video Production
+- Video Publishing & Scheduling
+- Audience Engagement
+- TikTok Growth Strategy
+- Performance Analytics
+5. YouTube Channel Management
+- YouTube Channel Setup
+- Channel Branding
+- Channel SEO
+- Thumbnail Design
+- Video Editing
+- Shorts Creation
+- Video Upload & Scheduling
+- Title & Description Optimization
+- Playlist Management
+- Comment Management
+- Channel Growth Strategy
+- Analytics & Reporting
+6. Complete Social Media Management
+- Multi-platform Account Management
+- Monthly Content Calendar
+- Brand Voice Development
+- Monthly Content Strategy
+- Graphic Design
+- Video & Reels Production
+- Content Copywriting
+- Post Scheduling
+- Inbox & Comment Management
+- Community Building
+- Audience Engagement
+- Influencer Coordination
+- Social Media Campaign Management
+- Monthly Performance Reporting
+- Competitor Analysis
+- Social Media Growth Strategy

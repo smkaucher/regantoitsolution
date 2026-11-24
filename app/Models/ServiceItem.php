@@ -9,6 +9,8 @@ class ServiceItem extends Model
 {
     protected $guarded = [];
 
+    protected $casts = ['points' => 'array'];
+
     public function service(): BelongsTo
     {
         return $this->belongsTo(Service::class);

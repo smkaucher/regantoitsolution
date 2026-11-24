@@ -22,6 +22,18 @@
                 <span class="ai-typed aib-typed" data-typing='@json($prompts)' data-caret="ai-caret"></span>
             </span>
         </button>
+        @php
+            // number, suffix, decimals, label
+            $stats = [[80, '+', 0, 'Projects Delivered'], [40, '+', 0, 'Happy Clients'], [4.9, '★', 1, 'Client Rating'], [24, '/7', 0, 'Digital Support']];
+        @endphp
+        <div class="hero-stats" data-a="up" style="--d:.9s">
+            @foreach($stats as [$value, $suffix, $decimals, $label])
+                <div class="hero-stat">
+                    <strong><span data-count="{{ $value }}" data-suffix="{{ $suffix }}" data-decimals="{{ $decimals }}">0</span></strong>
+                    {{ $label }}
+                </div>
+            @endforeach
+        </div>
     </div>
 
     <div class="hero-rings" aria-hidden="true"><i></i></div>
@@ -41,4 +53,5 @@
             @endfor
         </div>
     </div>
+
 </section>

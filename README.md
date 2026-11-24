@@ -7,6 +7,10 @@ Plain Blade views, CSS and vanilla JS, so there is **no Node or Vite build step*
 - **Admin panel** (`/admin`): site settings and logo, services and sub-items, projects with gallery, testimonials, FAQs, stats, client logos and blog articles.
 - **SEO:** per-page meta, canonical and Open Graph tags, `sitemap.xml`, `robots.txt`, a 404 page, automatic image resizing on upload.
 
+## English and Bangla
+
+The site has a language switch in the top bar (English / বাংলা); the choice is remembered in a cookie. The pages are written in English. For a Bangla visitor the finished page is translated on the way out from `lang/bn.json` (key = the English text, value = the Bangla text), see `app/Support/Translator.php`. Anything not in that file simply stays English, so after adding a service, project or FAQ in the admin panel, add one line for it to `lang/bn.json` to get its Bangla version. The admin panel is English only.
+
 ## Run it on XAMPP (Windows)
 
 Requirements: XAMPP with **PHP 8.2 or newer** (8.3 is fine) and MySQL, plus [Composer](https://getcomposer.org). The PHP extensions `gd`, `mbstring`, `pdo_mysql`, `fileinfo` and `exif` must be on (XAMPP enables them by default).

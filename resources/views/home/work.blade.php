@@ -9,7 +9,7 @@
         'UI/UX Design' => ['shopnet-ai-chat-ui', 'storepal-e-commerce-store', 'rareman-mobile-ui', 'regantify-platform-landing', 'shopnet-mobile-categories-ui', 'rareman-fashion-store', 'shopnet-mobile-home-ui', 'shopnet-multi-category-store'],
     ];
 @endphp
-<section class="block wk2" id="work" data-wk2>
+<section class="block wk2" data-wk2 data-order="{{ json_encode($workOrder) }}">
     <div class="wk2-head" data-replay data-threshold="0.4">
         <span class="svc2-eyebrow" data-a="up">OUR WORK</span>
         <h2 data-a="up" style="--d:.1s">Recent Work That Drives Results</h2>
@@ -40,37 +40,3 @@
     </div>
     <p class="wk2-more"><a class="btn btn-sm" href="{{ url('/projects') }}">View all projects <x-icon name="arrow-circle" size="16" /></a></p>
 </section>
-<script>
-(function () {
-    var root = document.querySelector('[data-wk2]');
-    if (!root) return;
-    var tabs = root.querySelectorAll('.wk2-tabs button');
-    var cards = root.querySelectorAll('.wk2-card');
-    var ORDER = @json($workOrder);
-    var GROW = [2, 1, 1.4, 1.6, 1, 2, 1.5, 1.1]; // varied widths; every row still fills the full width
-    function show(tag) {
-        var grid = document.getElementById('wk2Grid');
-        grid.classList.toggle('is-all', tag === 'All');
-        grid.classList.toggle('is-brand', tag === 'Graphics & Branding');
-        var list = ORDER[tag] || [];
-        var n = 0;
-        cards.forEach(function (c) {
-            var ok = tag === 'All' || JSON.parse(c.dataset.tags || '[]').indexOf(tag) > -1;
-            c.hidden = !ok;
-            if (!ok) return;
-            var r = list.indexOf(c.dataset.slug);
-            c.style.order = r > -1 ? r : 100 + parseInt(c.dataset.i, 10);
-            c.style.setProperty('--g', GROW[n % GROW.length]);
-            c.style.setProperty('--n', Math.min(n++, 10));
-            c.style.animation = 'none'; void c.offsetWidth; c.style.animation = '';
-        });
-    }
-    tabs.forEach(function (b) {
-        b.addEventListener('click', function () {
-            tabs.forEach(function (x) { x.classList.toggle('on', x === b); x.setAttribute('aria-selected', x === b ? 'true' : 'false'); });
-            show(b.dataset.tag);
-        });
-    });
-    show(tabs[0].dataset.tag);
-})();
-</script>

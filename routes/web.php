@@ -5,12 +5,23 @@ use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/_/home/{part}', [HomeController::class, 'section'])->whereIn('part', ['services', 'work', 'features', 'reviews', 'faq'])->name('home.section');
+Route::get('/_/services/{slug}', [PageController::class, 'serviceCards'])->name('services.cards');
+Route::get('/lang/{locale}', function (string $locale) {
+    abort_unless(in_array($locale, ['en', 'bn'], true), 404);
+    // Back to the page the visitor was on, but only if it is on this site.
+    $back = url()->previous();
+    $to = str_starts_with($back, url('/')) ? $back : url('/');
+
+    return redirect($to)->withCookie(cookie('lang', $locale, 60 * 24 * 365, '/', null, false, false, false, 'lax'));
+})->name('lang');
 Route::get('/sitemap.xml', [\App\Http\Controllers\SeoController::class, 'sitemap'])->name('sitemap');
 Route::get('/robots.txt', [\App\Http\Controllers\SeoController::class, 'robots'])->name('robots');
 
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/services', [PageController::class, 'services'])->name('services');
 Route::get('/services/{slug}', [PageController::class, 'service'])->name('services.show');
+Route::get('/services/{slug}/{item}', [PageController::class, 'serviceItem'])->name('services.item');
 Route::get('/projects', [PageController::class, 'projects'])->name('projects');
 Route::get('/projects/{slug}', [PageController::class, 'project'])->name('projects.show');
 Route::get('/team', [PageController::class, 'team'])->name('team');

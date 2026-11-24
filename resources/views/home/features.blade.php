@@ -8,7 +8,7 @@
     ];
     $reasons = ['Strategy-Led UI/UX That Converts', 'Custom Builds Tailored to Your Goals', 'Transparent Communication & Process', 'Scalable Frontend & Backend Engineering', 'Performance, Speed & Quality Standards', 'Reliable Support & Long-Term Partnership'];
 @endphp
-<section class="wy" id="features" data-replay data-threshold="0.2">
+<section class="wy" data-replay data-threshold="0.2">
     <div class="wy-head">
         <span class="svc2-eyebrow" data-a="up">WHY CHOOSE US</span>
         <h2 data-a="up" style="--d:.1s">Why Businesses Choose {{ $name }}</h2>

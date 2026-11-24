@@ -14,8 +14,13 @@ class SeoController extends Controller
         foreach (['/', '/about', '/services', '/projects', '/team', '/blog', '/contact'] as $path) {
             $urls[] = [url($path), null];
         }
-        foreach (Service::active()->get(['slug', 'updated_at']) as $s) {
+        foreach (Service::active()->with('items:id,service_id,slug,updated_at')->get(['id', 'slug', 'updated_at']) as $s) {
             $urls[] = [url('/services/' . $s->slug), $s->updated_at];
+            foreach ($s->items as $i) {
+                if ($i->slug) {
+                    $urls[] = [url('/services/' . $s->slug . '/' . $i->slug), $i->updated_at];
+                }
+            }
         }
         foreach (Project::active()->get(['slug', 'updated_at']) as $p) {
             $urls[] = [url('/projects/' . $p->slug), $p->updated_at];

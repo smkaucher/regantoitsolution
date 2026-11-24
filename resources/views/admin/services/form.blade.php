@@ -2,7 +2,7 @@
 @section('title', $service->exists ? 'Edit service' : 'Add service')
 @section('content')
 @php
-    $items = old('items', $service->exists ? $service->items->map(fn ($i) => ['title' => $i->title, 'description' => $i->description])->all() : []);
+    $items = old('items', $service->exists ? $service->items->map(fn ($i) => ['id' => $i->id, 'title' => $i->title, 'description' => $i->description, 'points' => implode("\n", $i->points ?? [])])->all() : []);
     $img = \App\Support\Media::url($service->image);
 @endphp
 <form class="ad-form" method="POST" enctype="multipart/form-data"
@@ -32,12 +32,14 @@
     </section>
 
     <section class="ad-panel">
-        <h2>Sub-items (shown on the home tabs and service page)</h2>
+        <h2>Services in this category (each one has its own page)</h2>
         <div id="itemRows">
             @foreach($items as $i => $it)
                 <div class="ad-item">
+                    <input type="hidden" name="items[{{ $i }}][id]" value="{{ $it['id'] ?? '' }}">
                     <input type="text" name="items[{{ $i }}][title]" value="{{ $it['title'] ?? '' }}" placeholder="Title, e.g. Mobile App UI/UX">
                     <textarea name="items[{{ $i }}][description]" rows="2" placeholder="Short description">{{ $it['description'] ?? '' }}</textarea>
+                    <textarea name="items[{{ $i }}][points]" rows="4" placeholder="What is included, one point per line">{{ $it['points'] ?? '' }}</textarea>
                     <button type="button" class="ad-link-danger" data-remove>Remove</button>
                 </div>
             @endforeach
@@ -55,6 +57,7 @@
     <div class="ad-item">
         <input type="text" name="items[__N__][title]" placeholder="Title, e.g. Mobile App UI/UX">
         <textarea name="items[__N__][description]" rows="2" placeholder="Short description"></textarea>
+        <textarea name="items[__N__][points]" rows="4" placeholder="What is included, one point per line"></textarea>
         <button type="button" class="ad-link-danger" data-remove>Remove</button>
     </div>
 </template>

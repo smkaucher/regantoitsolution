@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,6 +26,14 @@
     <link rel="stylesheet" href="{{ asset('assets/css/site.css') }}?v={{ filemtime(public_path('assets/css/site.css')) }}">
     <link rel="stylesheet" href="{{ asset('assets/css/blade.css') }}?v={{ filemtime(public_path('assets/css/blade.css')) }}">
     @stack('head')
+    @php
+        // Texts the page scripts show. Scripts are not translated automatically, so their texts are looked up here.
+        $jsText = ['Client', 'Category', 'Loading…',
+            "Hi! I'm Reganto AI. Ask me about our services, projects, team, pricing, location or how to book.",
+            'Sorry, I could not answer right now. Please message us on WhatsApp or use the Contact page.'];
+        $jsText = collect($jsText)->mapWithKeys(fn ($k) => [$k => app()->getLocale() === 'bn' ? \App\Support\Translator::text($k) : $k]);
+    @endphp
+    <script>window.T = {!! json_encode($jsText, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}; window.t = function (k) { return (window.T && window.T[k]) || k; };</script>
 </head>
 <body>
     @include('partials.announce')
