@@ -78,7 +78,8 @@ class ProjectController extends Controller
         return $request->validate([
             'title' => 'required|string|max:150',
             'slug' => ['nullable', 'string', 'max:160', 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/', Rule::unique('projects', 'slug')->ignore($project)],
-            'category' => 'nullable|string|max:80',
+            // A known category, or the one this project already has (kept so an old value never blocks a save)
+            'category' => ['nullable', Rule::in(array_filter([...Project::CATEGORIES, $project?->category]))],
             'client' => 'nullable|string|max:150',
             'url' => 'nullable|url|max:255',
             'short_description' => 'nullable|string|max:500',

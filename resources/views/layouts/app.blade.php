@@ -30,7 +30,14 @@
         // Texts the page scripts show. Scripts are not translated automatically, so their texts are looked up here.
         $jsText = ['Client', 'Category', 'Loading…',
             "Hi! I'm Reganto AI. Ask me about our services, projects, team, pricing, location or how to book.",
-            'Sorry, I could not answer right now. Please message us on WhatsApp or use the Contact page.'];
+            'Sorry, I could not answer right now. Please message us on WhatsApp or use the Contact page.',
+            // Home "Write a review" form (home.js)
+            'Sending…', 'Please enter your name.', 'Please write your review.', 'Please write a little more (at least 10 letters).',
+            'The photo must be smaller than 2 MB.', 'Thank you! Your review will show on the site after our team checks it.',
+            'Too many tries. Please wait a few minutes and try again.', 'This page was open too long. Please reload the page and try again.',
+            'Could not send your review. Please try again.', 'Could not send your review. Please check your internet and try again.',
+            // /home2 laptop screen (home2.js)
+            'Our work', 'Why us', 'Reviews', 'FAQ'];
         $jsText = collect($jsText)->mapWithKeys(fn ($k) => [$k => app()->getLocale() === 'bn' ? \App\Support\Translator::text($k) : $k]);
     @endphp
     <script>window.T = {!! json_encode($jsText, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}; window.t = function (k) { return (window.T && window.T[k]) || k; };</script>

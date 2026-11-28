@@ -27,7 +27,7 @@ class ServiceController extends Controller
         $data = $this->validated($request);
         $service = DB::transaction(function () use ($request, $data) {
             $service = Service::create($this->attributes($request, $data));
-            $this->syncItems($service, $data['items'] ?? []);
+            $this->syncItems($service, $data['items'] ?? [], $request);
 
             return $service;
         });
@@ -45,7 +45,7 @@ class ServiceController extends Controller
         $data = $this->validated($request, $service);
         DB::transaction(function () use ($request, $data, $service) {
             $service->update($this->attributes($request, $data, $service));
-            $this->syncItems($service, $data['items'] ?? []);
+            $this->syncItems($service, $data['items'] ?? [], $request);
         });
 
         return redirect()->route('admin.services.edit', $service)->with('ok', 'Service saved.');
@@ -61,6 +61,9 @@ class ServiceController extends Controller
     public function destroy(Service $service)
     {
         $this->deleteImage($service->image);
+        foreach ($service->items as $item) {
+            $this->deleteImage($item->image);
+        }
         $service->delete(); // items cascade
 
         return redirect()->route('admin.services.index')->with('ok', 'Service deleted.');
@@ -82,6 +85,11 @@ class ServiceController extends Controller
             'items.*.points' => 'nullable|string|max:8000',
             'items.*.title' => 'nullable|string|max:150',
             'items.*.description' => 'nullable|string|max:600',
+            'items.*.image' => 'nullable|image|max:3072',
+            'items.*.remove_image' => 'nullable|boolean',
+        ], [
+            'items.*.image.image' => 'An item picture must be an image (JPG, PNG or WebP).',
+            'items.*.image.max' => 'An item picture must be smaller than 3 MB.',
         ]);
     }
 
@@ -119,24 +127,34 @@ class ServiceController extends Controller
         return $slug;
     }
 
-    /** Updates the service items in place so each one keeps its slug, picture and points. */
-    private function syncItems(Service $service, array $items): void
+    /**
+     * Updates the service items in place so each one keeps its slug, picture and points. An item's picture is the
+     * cover of its pop-up on the website (without one the pop-up uses the service's own image).
+     */
+    private function syncItems(Service $service, array $items, Request $request): void
     {
         $existing = $service->items()->get()->keyBy('id');
         $kept = [];
         $order = 0;
-        foreach ($items as $item) {
+        foreach ($items as $key => $item) {
             $title = trim($item['title'] ?? '');
             if ($title === '') {
                 continue;
             }
+            $row = $existing->get((int) ($item['id'] ?? 0));
             $values = [
                 'title' => $title,
                 'description' => trim($item['description'] ?? '') ?: null,
                 'points' => array_values(array_filter(array_map('trim', preg_split('/\R/', $item['points'] ?? '')))),
                 'sort_order' => $order++,
             ];
-            $row = $existing->get((int) ($item['id'] ?? 0));
+            if ($file = $request->file("items.$key.image")) {
+                $this->deleteImage($row?->image);
+                $values['image'] = \App\Support\ImageOptimizer::store($file, 'services/items');
+            } elseif (!empty($item['remove_image'])) {
+                $this->deleteImage($row?->image);
+                $values['image'] = null;
+            }
             if ($row) {
                 $row->update($values);
                 $kept[] = $row->id;
@@ -144,7 +162,10 @@ class ServiceController extends Controller
                 $kept[] = $service->items()->create($values + ['slug' => $this->uniqueItemSlug($service, $title)])->id;
             }
         }
-        $service->items()->whereNotIn('id', $kept)->delete();
+        foreach ($service->items()->whereNotIn('id', $kept)->get() as $gone) {
+            $this->deleteImage($gone->image);
+            $gone->delete();
+        }
     }
 
     private function uniqueItemSlug(Service $service, string $title): string

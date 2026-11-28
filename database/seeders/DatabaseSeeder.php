@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Blog;
 use App\Models\Client;
 use App\Models\Faq;
 use App\Models\Project;
@@ -100,21 +99,6 @@ class DatabaseSeeder extends Seeder
         Client::query()->delete();
         foreach (['Ratul Properties', 'Al Safa', 'AKC Play', 'Burger Overloaded', 'Pitzah', 'ULTIMA'] as $i => $n) {
             Client::create(['name' => $n, 'sort_order' => $i + 1]);
-        }
-
-        Blog::query()->delete();
-        $blogs = [
-            ['Voice UI (VUI): Designing Experiences Beyond the Screen', 'assets/img/bg.webp', 8],
-            ['AI in UI/UX: Practical Use-Cases That Improve Products', 'assets/img/bg2.webp', 5],
-            ['UI/UX Trends: What Modern Products Are Doing Differently', 'assets/img/bg3.webp', 10],
-        ];
-        foreach ($blogs as $i => [$t, $img, $min]) {
-            Blog::create([
-                'title' => $t, 'slug' => Str::slug($t), 'category' => "{$min} min read", 'image' => $img,
-                'excerpt' => 'A short sample article. Edit it from the admin panel.',
-                'content' => '<p>Sample content.</p>',
-                'published_at' => now()->subDays($i * 7),
-            ]);
         }
     }
 }

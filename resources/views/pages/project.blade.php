@@ -7,7 +7,7 @@
     <section class="block pg-split">
         <div>
             @if($project->cover_image)<img class="pg-cover" src="{{ \App\Support\Media::url($project->cover_image) }}" alt="{{ $project->title }}">@endif
-            <div class="pg-prose">{!! $project->description ?: '<p>' . e($project->short_description) . '</p>' !!}</div>
+            <div class="pg-prose">{!! \App\Support\SafeHtml::clean($project->description) ?: '<p>' . e($project->short_description) . '</p>' !!}</div>
             @if($project->images->count())<div class="pg-gallery">@foreach($project->images as $img)<img src="{{ \App\Support\Media::url($img->path) }}" alt="" loading="lazy">@endforeach</div>@endif
         </div>
         <aside class="pg-side">

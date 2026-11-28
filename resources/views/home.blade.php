@@ -19,7 +19,7 @@
 
     {{-- Everything below loads when the visitor scrolls close to it, so the first screen is small and fast. --}}
     @foreach([['services', 44], ['work', 36], ['features', 30], ['reviews', 28], ['faq', 26]] as [$part, $height])
-        <div id="{{ $part }}" class="lazy-ph" data-lazy="{{ route('home.section', $part) }}" style="--h:{{ $height }}rem" aria-busy="true"></div>
+        <div id="{{ $part }}" class="lazy-ph" data-lazy="{{ route('home.section', $part) }}?v={{ \App\Support\SiteVersion::get() }}" style="--h:{{ $height }}rem" aria-busy="true"></div>
     @endforeach
     <noscript>
         <p class="lazy-fail"><a class="btn btn-sm" href="{{ url('/services') }}">Our Services</a> <a class="btn btn-sm" href="{{ url('/projects') }}">Our Projects</a></p>

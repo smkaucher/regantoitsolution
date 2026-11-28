@@ -21,6 +21,12 @@ class Project extends Model
      * Web and software work also counts as UI/UX design; graphics and branding share one tab.
      * @return string[]
      */
+    /**
+     * The categories the site knows: tags() turns them into the Projects page tabs and config/service_work.php
+     * shows them on the service pages. A category outside this list would show under "All" only.
+     */
+    public const CATEGORIES = ['Web Development', 'Software', 'UI/UX Design', 'Graphics Design', 'Branding'];
+
     public function tags(): array
     {
         return match ($this->category) {

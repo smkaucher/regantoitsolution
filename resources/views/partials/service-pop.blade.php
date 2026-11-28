@@ -1,7 +1,8 @@
 @php
     $points = $item->points ?? [];
     $lead = $item->description ?: ($item->title . ' from the Reganto IT Solution team. Everything that is included is listed below.');
-    $cover = \App\Support\Media::url($item->image);
+    // The item's own picture, else its service's image; the icon only when neither has one.
+    $cover = \App\Support\Media::url($item->image ?: $service->image);
     $wa = $site['whatsapp'] ?? null;
     if ($wa) { $wa .= (str_contains($wa, '?') ? '&' : '?') . 'text=' . rawurlencode("Hi, I'd like to book: " . $item->title); }
     $mail = $site['email'] ?? null;

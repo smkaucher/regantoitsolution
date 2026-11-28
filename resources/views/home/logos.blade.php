@@ -2,7 +2,7 @@
     $icons = ['cloud', 'hex', 'leaf', 'wave', 'gear', 'ring'];
 @endphp
 @if($clients->count())
-<section class="brand-marquee" aria-label="Trusted by teams that value quality">
+<section class="brand-marquee hm-logos" aria-label="Trusted by teams that value quality">
     <div class="brand-track">
         @for($c = 0; $c < 6; $c++)
             @foreach($clients as $i => $client)

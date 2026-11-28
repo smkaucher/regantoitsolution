@@ -1,5 +1,5 @@
 {{-- Service categories as tabs with cards. Used on the Services page and on the home page. Optional: $heading, $anchor --}}
-<section class="block wk2 sv2" data-sv2 data-src="{{ url('/_/services') }}" @isset($anchor) id="{{ $anchor }}" @endisset>
+<section class="block wk2 sv2" data-sv2 data-src="{{ url('/_/services') }}" data-v="{{ \App\Support\SiteVersion::get() }}" @isset($anchor) id="{{ $anchor }}" @endisset>
     @isset($heading)
         <div class="wk2-head">
             <h2>{{ $heading }}</h2>

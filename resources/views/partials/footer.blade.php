@@ -47,7 +47,6 @@
             <a href="{{ url('/') }}">Home</a>
             <a href="{{ url('/projects') }}">Projects</a>
             <a href="{{ url('/about') }}">About</a>
-            <a href="{{ url('/blog') }}">Blog</a>
         </div>
         <div>
             <h4>Services</h4>

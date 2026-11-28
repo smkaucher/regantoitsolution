@@ -24,7 +24,7 @@
                 </td>
                 <td class="ad-actions">
                     <a href="{{ route('admin.projects.edit', $p) }}">Edit</a>
-                    <form method="POST" action="{{ route('admin.projects.destroy', $p) }}" onsubmit="return confirm('Delete {{ addslashes($p->title) }} and its photos?')">@csrf @method('DELETE')<button class="ad-link-danger" type="submit">Delete</button></form>
+                    <form method="POST" action="{{ route('admin.projects.destroy', $p) }}" data-confirm-title="Delete this project?" data-confirm="“{{ $p->title }}” and all its photos will be removed from the website. This can't be undone.">@csrf @method('DELETE')<button class="ad-link-danger" type="submit">Delete</button></form>
                 </td>
             </tr>
         @empty

@@ -18,7 +18,7 @@
                 </td>
                 <td class="ad-actions">
                     <a href="{{ route('admin.services.edit', $s) }}">Edit</a>
-                    <form method="POST" action="{{ route('admin.services.destroy', $s) }}" onsubmit="return confirm('Delete {{ addslashes($s->title) }} and its items?')">@csrf @method('DELETE')<button class="ad-link-danger" type="submit">Delete</button></form>
+                    <form method="POST" action="{{ route('admin.services.destroy', $s) }}" data-confirm-title="Delete this service?" data-confirm="“{{ $s->title }}”, every service inside it and their pictures will be removed from the website and the menu. This can't be undone.">@csrf @method('DELETE')<button class="ad-link-danger" type="submit">Delete</button></form>
                 </td>
             </tr>
         @empty

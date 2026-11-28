@@ -1,0 +1,229 @@
+/* /home2: the animated landing page. Same colours as the home page (navy, teal, gold on light blue-white).
+   One laptop (.dv) travels down the page; home2.js sets its position and these variables on it:
+   --lid  lid angle (90deg = shut, 0 = open)        --base  keyboard fold (0 = laptop, 1 = folded away: a monitor)
+   --tilt a slight 3D turn while it travels                                                                         */
+.h2{--ink:#0f2236;--dim:#4a5d6e;--teal:#0a7ba6;--teal2:#0d93c6;--gold:#f2a900;--line:rgba(15,34,54,.12);--paper:#f4f8fc;color:var(--ink);
+  --hm-ink:#0f2236;--hm-teal:#0a7ba6;--hm-gold:#f2a900} /* the shared .hm-btn reads the --hm-* colours */
+.h2 .hm-btn{border:0;cursor:pointer}
+
+/* ---------------- Hero ---------------- */
+.h2-hero{position:relative;display:grid;grid-template-columns:minmax(0,.56fr) minmax(0,1.44fr);align-items:center;gap:1.5rem;
+  min-height:calc(100vh - 3.6rem);min-height:calc(100svh - 3.6rem);padding:6.5rem clamp(1.2rem,4vw,4rem) clamp(2rem,6vh,4rem);overflow:hidden;isolation:isolate}
+/* The header sits over the hero here (as on the home page); its links stay dark over the light photo */
+.rg-hd.rg-hd--h2:not(.stuck):not(.menu-open) .rg-lk--blue:not(:hover):not(.on){color:#0f2236}
+.rg-hd.rg-hd--h2:not(.stuck):not(.menu-open) .rg-lk--blue::before{background:rgba(15,34,54,.2)}
+@media (max-width:600px){.h2-hero{padding-top:5.5rem}}
+/* Background: the office photo with its marble desk along the bottom (the laptop sits on it). A white wash on the
+   left keeps the headline readable; a soft band of light passes across now and then (transform only: cheap). */
+.h2-bg{position:absolute;inset:0;z-index:-1;overflow:hidden;background:#dcecf9 url(../img/hero2-office.webp) 50% 100%/cover no-repeat}
+.h2-bg::before{content:"";position:absolute;inset:0;background:
+   linear-gradient(90deg,rgba(255,255,255,.93) 0%,rgba(255,255,255,.78) 28%,rgba(255,255,255,.18) 52%,rgba(255,255,255,0) 66%),
+   linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,0) 26%)}
+.h2-sweep{position:absolute;top:-20%;bottom:-20%;left:0;width:22%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.38),transparent);
+  transform:translate3d(-120%,0,0) skewX(-14deg);animation:h2-sweep 11s ease-in-out 2.5s infinite;will-change:transform}
+@keyframes h2-sweep{0%{transform:translate3d(-120%,0,0) skewX(-14deg)}45%,100%{transform:translate3d(560%,0,0) skewX(-14deg)}}
+/* Nothing loops while the hero is off screen (home2.js adds .off) */
+.h2-hero.off .h2-sweep,.h2-hero.off .gbox::after,.h2-hero.off .h2-title em{animation-play-state:paused}
+
+.h2-eb{display:inline-flex;align-items:center;gap:10px;margin:0 0 1.1rem;font-size:12px;letter-spacing:.2em;color:#1d6a93}
+.h2-eb i{width:7px;height:7px;background:var(--gold)}
+.h2-title{margin:0;font-size:clamp(2rem,2.95vw,3.7rem);line-height:.98;font-weight:900;letter-spacing:-.02em;text-transform:uppercase}
+.h2-title span{display:block;overflow:hidden;padding-bottom:.04em}
+.h2-title b{display:block;font-weight:inherit;transform:translateY(105%)}
+.h2-title em{font-style:normal;color:transparent;background:linear-gradient(100deg,var(--teal) 20%,var(--teal2) 40%,var(--gold) 50%,var(--teal) 62%) 0 0/250% 100%;-webkit-background-clip:text;background-clip:text;animation:h2-shine 5s ease-in-out 2s infinite}
+@keyframes h2-shine{0%,60%{background-position:100% 0}100%{background-position:-60% 0}}
+.h2-sub{max-width:31rem;margin:1.4rem 0 1.8rem;font-size:1.05rem;line-height:1.65;color:var(--dim)}
+.h2-cta{display:flex;flex-wrap:wrap;align-items:center;gap:1rem 1.4rem}
+.h2-ghost{font-weight:700;font-size:.92rem;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--gold);padding:.2rem 0}
+.h2-ghost:hover{color:var(--teal)}
+.h2-stats{display:grid;grid-template-columns:repeat(4,auto);justify-content:start;gap:1.6rem;margin-top:2.4rem;padding-top:1.4rem;border-top:1px solid var(--line)}
+.h2-stats strong{display:block;font-size:1.7rem;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums}
+.h2-stats small{font-size:.78rem;color:var(--dim)}
+/* Entrance: the copy rises line by line once home2.js adds .go */
+.h2-hero .h2-eb,.h2-hero .h2-sub,.h2-hero .h2-cta,.h2-hero .h2-stats{opacity:0;transform:translateY(18px)}
+.h2-hero.go .h2-title b{transform:none;transition:transform 1s cubic-bezier(.2,.8,.2,1)}
+.h2-hero.go .h2-title span:nth-child(2) b{transition-delay:.12s}.h2-hero.go .h2-title span:nth-child(3) b{transition-delay:.24s}
+.h2-hero.go .h2-eb,.h2-hero.go .h2-sub,.h2-hero.go .h2-cta,.h2-hero.go .h2-stats{opacity:1;transform:none;transition:opacity .7s,transform .8s cubic-bezier(.2,.8,.2,1)}
+.h2-hero.go .h2-sub{transition-delay:.4s}.h2-hero.go .h2-cta{transition-delay:.52s}.h2-hero.go .h2-stats{transition-delay:.64s}
+
+/* Stage: the laptop in the middle, low; a coverflow of five glass screens (the laptop screen's size) around it,
+   two on each side, like the reviews deck. Every screen sits on the laptop's spot and is moved out by its place
+   --d (-2..2, set by home2.js): sideways, fanned (--s = side), smaller and fainter further out (--a = distance),
+   all leaning a little to the right. Place 0 is inside the laptop: the screen slides in behind its glass. */
+.h2-stage{position:relative;width:100%;align-self:end;aspect-ratio:16/8.2}
+.h2-lslot{position:absolute;left:31.8%;top:21%;width:42%;aspect-ratio:600/380}
+.cfv{position:absolute;left:31.8%;top:21%;width:42%;aspect-ratio:600/380;perspective:1500px;container-type:inline-size;opacity:0;transform:translate3d(0,40px,0);
+  transition:opacity .8s .15s,transform 1s .15s cubic-bezier(.2,1,.3,1)}
+.h2-hero.mons .cfv{opacity:1;transform:none}
+.h2-hero.away .cfv{opacity:0;transform:translate3d(0,-30px,0);transition-delay:0s}
+.cv{--d:0;--a:0;--s:0;--lean:-9deg;position:absolute;inset:0;display:block;container-type:inline-size;text-decoration:none;color:#fff;
+  transform:translate3d(calc(var(--d) * 46% + var(--s) * 12%),0,calc(var(--a) * -60px)) rotateY(calc(var(--s) * -32deg + var(--lean))) scale(calc(1 - var(--a) * .2));
+  transition:transform .95s cubic-bezier(.22,.8,.24,1),opacity .75s ease}
+.cv.gbox{position:absolute} /* (.gbox alone is position:relative) */
+.cv.jump{transition:none}
+.cv:hover{border-color:#e6f6ff}
+.cv:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.cv .sl{opacity:1;transform:none;pointer-events:none;transition:none}
+
+/* The glass screen: translucent blue, glowing edge; the cards slide inside it */
+.gbox{position:relative;aspect-ratio:600/380;border-radius:3.2cqw;overflow:hidden;
+  background:linear-gradient(165deg,rgba(38,140,232,.78),rgba(12,78,168,.72) 55%,rgba(6,44,110,.82));
+  border:1px solid rgba(160,222,255,.9);box-shadow:0 0 0 1px rgba(90,190,255,.25),0 22px 46px -20px rgba(8,52,112,.75),inset 0 0 26px rgba(140,210,255,.35)}
+.gbox::before{content:"";position:absolute;left:0;right:0;top:0;height:45%;background:linear-gradient(180deg,rgba(255,255,255,.2),transparent);pointer-events:none;z-index:2}
+/* the edge glow breathes (opacity only: cheap) */
+.gbox::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1.5px rgba(170,230,255,.95),0 0 30px rgba(56,176,255,.95);opacity:.55;pointer-events:none;z-index:2;animation:gp-glow 4.5s ease-in-out infinite}
+@keyframes gp-glow{50%{opacity:1}}
+
+/* One service card. .on = shown; .out = sliding away to the left; the rest wait on the right, hidden. */
+.sl{position:absolute;inset:0;display:grid;grid-template-columns:1.25fr .75fr;align-items:center;gap:4cqw;padding:6cqw 6.5cqw;color:#fff;text-decoration:none;
+  font-size:max(10px,3.3cqw);line-height:1.35;opacity:0;transform:translate3d(45%,0,0);pointer-events:none;
+  transition:opacity .45s .18s,transform .8s .1s cubic-bezier(.2,.8,.2,1)}
+.sl.on{opacity:1;transform:none;pointer-events:auto}
+/* the old card leaves first and fast, then the new one slides in: they never overlap half-visible */
+.sl.out{opacity:0;transform:translate3d(-45%,0,0);transition:opacity .22s,transform .5s cubic-bezier(.4,0,.6,1)}
+.sl-txt{display:flex;flex-direction:column;align-items:flex-start;gap:2.2cqw;min-width:0}
+.sl .gp-ico{width:10cqw;height:10cqw;color:#eaf7ff;filter:drop-shadow(0 0 5px rgba(130,210,255,.9))}
+.sl strong{font-size:2em;font-weight:800;line-height:1.05;letter-spacing:-.01em;text-shadow:0 1px 8px rgba(0,30,70,.35)}
+.sl small{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-size:1em;color:rgba(228,242,255,.92)}
+.gp-btn{display:inline-flex;align-items:center;gap:1.4cqw;padding:1.4cqw 3.4cqw;border-radius:40cqw;border:1px solid rgba(180,232,255,.9);background:rgba(255,255,255,.08);font-size:.92em;font-weight:600;white-space:nowrap}
+.sl:hover .gp-btn{background:rgba(255,255,255,.22)}
+.sl:focus-visible{outline:2px solid var(--gold);outline-offset:-4px}
+/* The picture on the right of a card (drawn with CSS; no image files). cqw here = the picture column's width. */
+.sl-art{container-type:inline-size;width:100%}
+.gp-art{position:relative;height:62cqw;display:flex;align-items:flex-end;justify-content:center;gap:5cqw;color:#9fdcff}
+.a-win{display:flex;flex-direction:column;gap:4cqw;width:92%;height:58cqw;padding:9cqw 10cqw;border-radius:5cqw;background:rgba(4,22,48,.78);box-shadow:inset 0 0 0 1px rgba(140,210,255,.45)}
+.a-win i{display:block;height:4.5cqw;border-radius:3cqw;background:#5fc4ff}
+.a-win i:nth-child(2){width:70%;background:#f2a900;margin-left:10%}.a-win i:nth-child(3){width:55%;margin-left:10%}.a-win i:nth-child(4){width:80%;background:#9fe0b4;margin-left:20%}.a-win i:nth-child(5){width:40%}
+.a-scr{width:46%;height:46cqw;border-radius:5cqw;box-shadow:inset 0 0 0 1px rgba(170,225,255,.6)}
+.a-scr.a{background:linear-gradient(135deg,#7b5cff,#2fd0ff)}.a-scr.b{width:32%;height:34cqw;background:linear-gradient(135deg,#ff8ab6,#ffd36e)}
+.a-dots{display:flex;flex-direction:column;gap:4cqw;padding-bottom:2cqw}.a-dots i{width:9cqw;height:9cqw;border-radius:50%;background:#2fd0ff}.a-dots i:nth-child(2){background:#f2a900}.a-dots i:nth-child(3){background:#ff6fa5}
+.a-bars{display:flex;align-items:flex-end;gap:4.5cqw;width:92%;height:58cqw;border-bottom:1px solid rgba(160,222,255,.7)}
+.a-bars i{flex:1;height:var(--h);border-radius:2.5cqw 2.5cqw 0 0;background:linear-gradient(180deg,#7fe1ff,rgba(47,180,255,.35))}
+.gp-art[data-art=shield] svg{width:58cqw;height:58cqw;filter:drop-shadow(0 0 6px rgba(100,200,255,.9))}
+.a-net{position:absolute;inset:auto 0 0;height:60%;background:repeating-linear-gradient(90deg,rgba(140,210,255,.25) 0 1px,transparent 1px 14cqw);-webkit-mask-image:linear-gradient(transparent,#000);mask-image:linear-gradient(transparent,#000)}
+.a-soc{display:grid;grid-template-columns:repeat(3,auto);gap:5cqw;padding-bottom:2cqw}
+.a-soc svg{display:block;width:24cqw;height:24cqw;padding:5cqw;border-radius:6cqw;background:#1877f2;color:#fff}
+.a-soc svg:nth-child(2){background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af)}.a-soc svg:nth-child(3){background:#ff0000}.a-soc svg:nth-child(4){background:#0a66c2}.a-soc svg:nth-child(5){background:#111}
+
+/* ---------------- The travelling laptop ---------------- */
+/* With the 3D model (home2-3d.js): a full-screen WebGL layer draws the laptop; .dv only holds the HTML screen,
+   which the module maps onto the model's screen with matrix3d. */
+/* The 3D layer box: over the window while the laptop travels, inside a slot (absolute) while it rests there */
+.h2-host{position:fixed;left:0;top:0;z-index:50;pointer-events:none}
+.h2-host.is-anchored{position:absolute;z-index:20}
+.h2-host canvas{position:absolute;left:0;top:0;display:block}
+.h2-host .dv{position:absolute;left:0;top:0;z-index:1}
+.dv.dv--3d{transform:none!important;width:0;height:0}
+.dv--3d .dv-3d{display:none}
+.dv--3d>.dv-screen{position:absolute;left:0;top:0;width:572px;height:346px;aspect-ratio:auto;border-radius:2px;transform-origin:0 0;will-change:transform}
+.dv{--ink:#0f2236;--dim:#4a5d6e;--teal:#0a7ba6;--teal2:#0d93c6;--gold:#f2a900;--lid:90deg;--base:0;--tilt:0deg;position:fixed;left:0;top:0;z-index:51;width:600px;pointer-events:none;transform-origin:0 0;will-change:transform;visibility:hidden}
+.dv.ready{visibility:visible}
+.dv-3d{position:relative;perspective:1500px;transform:rotateY(var(--tilt));transform-style:preserve-3d}
+.dv-lid{position:relative;z-index:2;transform-origin:50% 100%;transform:rotateX(var(--lid));transform-style:preserve-3d}
+.dv-bezel{position:relative;padding:14px 14px 20px;border-radius:18px 18px 6px 6px;background:linear-gradient(180deg,#2b3540,#11171d);box-shadow:inset 0 0 0 1.5px #c9d1d8,inset 0 0 0 3px #3b4651,0 30px 60px -30px rgba(15,34,54,.6)}
+.dv-cam{position:absolute;left:50%;top:5px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:#3c4a57;box-shadow:inset 0 0 0 1px #0a0f14}
+.dv-screen{position:relative;aspect-ratio:572/346;border-radius:4px;overflow:hidden;background:#fff}
+/* The screen turns on once the lid is open (home2.js sets .on) */
+.dv-screen::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.22),transparent 40%);pointer-events:none}
+.dv-scr{position:absolute;inset:0;opacity:0;transform:scale(1.03);transition:opacity .5s,transform .6s cubic-bezier(.2,.8,.2,1)}
+.dv-scr.on{opacity:1;transform:none}
+.dv:not(.lit) .dv-scr{opacity:0}
+.dv:not(.lit) .dv-screen{background:#0b1117}
+
+/* Base: the keyboard deck and front lip; folds up and away behind the screen */
+.dv-base{position:absolute;left:-30px;right:-30px;top:100%;transform-origin:50% 0;transform:rotateX(calc(var(--base) * -100deg));opacity:calc(1 - var(--base) * 1.2)}
+.dv-deck{position:relative;height:30px;margin:0 30px;background:linear-gradient(180deg,#cfd6dc,#e9edf0);clip-path:polygon(0 0,100% 0,105% 100%,-5% 100%)}
+.dv-keys{position:absolute;left:14%;right:14%;top:5px;height:14px;background:repeating-linear-gradient(90deg,#b5bfc8 0 14px,transparent 14px 17px);opacity:.55;border-radius:2px}
+.dv-pad{position:absolute;left:42%;right:42%;bottom:2px;height:6px;border-radius:2px;background:#c3cbd2}
+.dv-lip{position:relative;height:12px;border-radius:0 0 14px 14px;background:linear-gradient(180deg,#f4f6f8,#b9c3cb 70%,#9ba7b1);box-shadow:0 16px 26px -12px rgba(15,34,54,.5)}
+.dv-lip i{position:absolute;left:50%;top:0;width:70px;height:5px;margin-left:-35px;border-radius:0 0 6px 6px;background:#aeb9c2}
+
+/* Screen 1: the carousel's current service (same slide-in / slide-out as the glass screens) */
+.dv-scr[data-scr=site]{background:radial-gradient(100% 90% at 85% 30%,#e3f1fa 0,#fff 60%)}
+.ls{position:absolute;inset:0 0 22px;display:grid;grid-template-columns:1.3fr .7fr;align-items:center;gap:18px;padding:22px 30px 0;color:var(--ink);
+  opacity:0;transform:translate3d(70px,0,0);transition:opacity .45s .18s,transform .8s .1s cubic-bezier(.2,.8,.2,1)}
+.ls.on{opacity:1;transform:none}
+.ls.out{opacity:0;transform:translate3d(-70px,0,0);transition:opacity .22s,transform .5s cubic-bezier(.4,0,.6,1)}
+.ls-num{font-size:11px;font-weight:700;letter-spacing:.22em;color:#1d6a93}
+.ls h3{margin:8px 0 8px;font-size:30px;line-height:1.02;font-weight:900;text-transform:uppercase}
+.ls p{margin:0 0 12px;font-size:13px;line-height:1.5;color:var(--dim);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.ls ul{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px;padding:0;list-style:none}
+.ls li{padding:4px 10px;border-radius:30px;background:#e3f1f8;font-size:11px;font-weight:600;color:#1d5f84}
+.ls-go{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:6px;background:var(--teal);color:#fff;font-size:12px;font-weight:700}
+.ls-ico{display:grid;place-items:center;width:132px;height:132px;justify-self:center;border-radius:50%;color:#fff;
+  background:radial-gradient(circle at 35% 30%,#3fb6ea,#0a7ba6 60%,#075b7c);box-shadow:0 18px 34px -14px rgba(10,123,166,.7),0 0 0 10px rgba(10,123,166,.08)}
+.ls-ico svg{width:62px;height:62px}
+.ls.on .ls-ico{animation:ls-pop .7s .15s cubic-bezier(.2,1.3,.3,1) both}
+@keyframes ls-pop{from{transform:scale(.6) rotate(-20deg);opacity:0}}
+.ls-dots{position:absolute;left:30px;bottom:12px;display:flex;gap:6px}
+.ls-dots i{width:8px;height:8px;border-radius:8px;background:#cfdbe5;transition:width .4s,background .4s}
+.ls-dots i.on{width:24px;background:var(--teal)}
+
+/* Screen 2: services, in step with the pinned section */
+.dv-scr[data-scr=svc]{display:flex;flex-direction:column;background:linear-gradient(165deg,#fff,#eef6fb);color:var(--ink)}
+.sv-bar{display:flex;align-items:center;gap:6px;padding:9px 16px;border-bottom:1px solid #e2ebf2;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#1d6a93}
+.sv-bar i{width:8px;height:8px;border-radius:50%;background:#d5dee6}.sv-bar i:first-child{background:var(--gold)}
+.sv-bar span{margin-left:6px}.sv-bar b{margin-left:auto;color:var(--ink)}
+.sv-panel{position:absolute;left:0;right:0;top:34px;bottom:8px;padding:14px 26px;opacity:0;transform:translateY(18px);transition:opacity .45s,transform .6s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.sv-panel.on{opacity:1;transform:none}
+.sv-num{display:inline-block;font-size:40px;font-weight:900;line-height:1;color:transparent;-webkit-text-stroke:1.5px var(--teal)}
+.sv-panel h3{margin:6px 0 6px;font-size:28px;line-height:1.05;font-weight:900;text-transform:uppercase}
+.sv-panel p{margin:0 0 12px;max-width:34em;font-size:13px;line-height:1.5;color:var(--dim);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sv-panel ul{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px;padding:0;list-style:none}
+.sv-panel li{padding:5px 11px;border-radius:30px;background:#fff;box-shadow:inset 0 0 0 1px #cfe2ee;font-size:11.5px;font-weight:600;color:#1d5f84}
+.sv-panel.on li{animation:h2-chip .5s cubic-bezier(.2,.8,.2,1) both}
+.sv-panel.on li:nth-child(2){animation-delay:.07s}.sv-panel.on li:nth-child(3){animation-delay:.14s}.sv-panel.on li:nth-child(4){animation-delay:.21s}
+@keyframes h2-chip{from{opacity:0;transform:translateY(8px)}}
+.sv-foot{font-size:12px;color:var(--dim)}.sv-foot b{font-size:18px;color:var(--gold)}
+.sv-progress{position:absolute;left:0;right:0;bottom:0;height:4px;background:#e2ebf2}
+.sv-progress i{display:block;height:100%;width:100%;transform-origin:0 0;transform:scaleX(var(--p,0));background:linear-gradient(90deg,var(--teal),var(--gold))}
+
+/* Screen 3: on the way down */
+.dv-scr[data-scr=mini]{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;background:linear-gradient(160deg,#0f2236,#0a3d5c);color:#fff;text-align:center}
+.mi-k{font-size:20px;letter-spacing:.2em;text-transform:uppercase;color:#8fc3df}
+.dv-scr[data-scr=mini] strong{font-size:58px;font-weight:900;line-height:1;text-transform:uppercase}
+.mi-bar{width:60%;height:8px;border-radius:8px;background:rgba(255,255,255,.15);overflow:hidden}
+.mi-bar i{display:block;height:100%;transform-origin:0 0;transform:scaleX(var(--p,0));background:var(--gold)}
+
+/* Screen 4: landed */
+.dv-scr[data-scr=cta]{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:12px;padding:0 48px;background:radial-gradient(100% 90% at 90% 10%,#e6f3fa,#fff 60%);color:var(--ink)}
+.dv-scr[data-scr=cta] img{height:26px;width:auto}
+.dv-scr[data-scr=cta] strong{font-size:40px;font-weight:900;line-height:1;text-transform:uppercase}
+.ct-line{display:block;width:70%;height:20px;border-radius:6px;background:#fff;box-shadow:inset 0 0 0 1.5px #d3e0ea}.ct-line.short{width:46%}
+.ct-btn{padding:10px 22px;border-radius:8px;background:var(--gold);font-size:15px;color:var(--ink);animation:h2-pulse 2s ease-in-out infinite}
+@keyframes h2-pulse{50%{box-shadow:0 0 0 10px rgba(242,169,0,.18)}}
+
+/* ---------------- Services section: the monitor takes the left column ---------------- */
+.svs-mslot{display:none}
+@media (min-width:1001px){
+  .h2 .svs-mslot{position:relative;display:block;width:100%;max-width:520px;aspect-ratio:600/380;margin-bottom:28px}
+  /* The text panels stay for screen readers (and home.js), the monitor shows them */
+  .h2 .svs-panels{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .h2 .svs-index{max-width:520px}
+}
+
+/* ---------------- Landing spot above the footer ---------------- */
+.h2-dock{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:center;gap:3rem;padding:clamp(4rem,12vh,7rem) clamp(1.2rem,4vw,4rem);background:linear-gradient(180deg,#fff,#eef6fb)}
+.h2-dock h2{margin:0;font-size:clamp(2rem,3.8vw,3.4rem);line-height:1;font-weight:900;text-transform:uppercase}
+.h2-dock h2 em{font-style:normal;color:var(--teal)}
+.h2-dock-copy>p:not(.h2-eb){margin:1.1rem 0 1.8rem;max-width:30rem;line-height:1.65;color:var(--dim)}
+.h2-dslot{position:relative;width:100%;max-width:560px;justify-self:center;aspect-ratio:600/380;margin-bottom:46px}
+
+/* ---------------- Phones, tablets, reduced motion: no travelling; the laptop sits in the hero ---------------- */
+@media (max-width:1000px){
+  .h2-hero{grid-template-columns:1fr;min-height:0}
+  .h2-stage{aspect-ratio:auto;display:grid;grid-template-columns:1fr;gap:16px;max-width:520px;width:100%;justify-self:center;perspective:none}
+  .h2-lslot{position:relative;left:auto;top:auto;order:-1;width:86%;justify-self:center;margin-bottom:46px}
+  .cfv{display:none} /* phones: the laptop screen shows the services on its own */
+  .h2-bg{background-image:url(../img/hero2-office-sm.webp);background-position:62% 100%}
+  .h2-bg::before{background:linear-gradient(180deg,rgba(255,255,255,.9) 0%,rgba(255,255,255,.75) 45%,rgba(255,255,255,.2) 75%)}
+  .h2-stats{grid-template-columns:repeat(2,auto);gap:1rem 2rem}
+  .h2-dock{grid-template-columns:1fr}
+}
+.dv.is-static{position:absolute;z-index:3}
+@media (prefers-reduced-motion:reduce){
+  .h2-sweep,.gbox::after,.h2-title em,.ct-btn,.ls-ico{animation:none!important}
+  .sl,.ls{transition:opacity .3s!important}
+  .h2-title b{transform:none}
+  .h2-hero .h2-eb,.h2-hero .h2-sub,.h2-hero .h2-cta,.h2-hero .h2-stats,.cfv{opacity:1;transform:none;transition:none}
+}

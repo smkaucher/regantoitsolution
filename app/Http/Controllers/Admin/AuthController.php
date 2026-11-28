@@ -27,6 +27,11 @@ class AuthController extends Controller
         if (Auth::attempt($credentials + ['is_admin' => true], $request->boolean('remember'))) {
             $request->session()->regenerate();
 
+            // A save that failed because the session had timed out: back to that form with what was typed.
+            if ($draft = $request->session()->pull('admin_draft')) {
+                return redirect($draft['url'])->withInput($draft['input'])->with('expired', 'restored');
+            }
+
             return redirect()->intended(route('admin.dashboard'));
         }
 

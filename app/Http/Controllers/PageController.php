@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Blog;
 use App\Models\Project;
 use App\Models\Service;
 use App\Models\Stat;
@@ -13,7 +12,7 @@ class PageController extends Controller
     {
         return view('pages.about', [
             'stats' => Stat::active()->take(4)->get(),
-            'team' => collect(config('team.groups'))->flatten(1)->unique('name')->take(4)->values()->all(),
+            'team' => collect(\App\Models\TeamGroup::forSite()['groups'])->flatten(1)->unique('name')->take(4)->values()->all(),
         ]);
     }
 
@@ -86,7 +85,7 @@ class PageController extends Controller
             'client' => $p->client,
             'url' => $p->url,
             'summary' => $t($p->short_description),
-            'description' => $bn && $p->description ? \App\Support\Translator::html($p->description) : $p->description,
+            'description' => $bn && $p->description ? \App\Support\Translator::html(\App\Support\SafeHtml::clean($p->description)) : \App\Support\SafeHtml::clean($p->description),
             'images' => collect([$p->cover_image])->merge($p->images->pluck('path'))->filter()
                 ->map(fn ($i) => \App\Support\Media::url($i))->unique()->values(),
         ])->values();
@@ -106,28 +105,14 @@ class PageController extends Controller
 
     public function team()
     {
-        $groups = collect(config('team.groups'))->map(fn ($members, $name) => ['name' => $name, 'members' => $members, 'cover' => config('team.covers.'.$name)])->values();
+        $team = \App\Models\TeamGroup::forSite();
+        $groups = collect($team['groups'])->map(fn ($members, $name) => ['name' => $name, 'members' => $members, 'cover' => $team['covers'][$name] ?? null])->values();
 
         return view('pages.team', ['groups' => $groups]);
     }
 
-    public function blogs()
-    {
-        return view('pages.blogs', ['blogs' => Blog::active()->get()]);
-    }
-
-    public function blog(string $slug)
-    {
-        $blog = Blog::active()->where('slug', $slug)->firstOrFail();
-
-        return view('pages.blog', [
-            'blog' => $blog,
-            'more' => Blog::active()->where('id', '!=', $blog->id)->take(3)->get(),
-        ]);
-    }
-
     public function contact()
     {
-        return view('pages.contact');
+        return view('pages.contact', ['serviceTitles' => \App\Models\Service::active()->pluck('title')]);
     }
 }

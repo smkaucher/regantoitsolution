@@ -15,9 +15,37 @@
       if (window.matchMedia('(max-width:900px)').matches && dd.hidden) { e.preventDefault(); show(true); }
     });
   });
-  var menuBtn = document.getElementById('menuBtn');
-  var pill = document.getElementById('navPill');
-  if (menuBtn && pill) menuBtn.addEventListener('click', function () { pill.classList.toggle('open'); });
+  /* ---------- Header: mobile menu; turns solid once the page is scrolled (transparent over the home hero) ---------- */
+  var hd = document.getElementById('rgHd');
+  if (hd) {
+    var menu = document.getElementById('rgMenu');
+    if (menu) menu.addEventListener('click', function () {
+      var open = !hd.classList.contains('menu-open');
+      hd.classList.toggle('menu-open', open);
+      menu.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    // Wide screens: if the links don't fit between the logo and the buttons, use the menu button (.rg-tight).
+    // Measured with the class off, so the bar can go back to the full row when there is room again.
+    var nav = document.getElementById('rgNav'), wide = window.matchMedia('(min-width:1181px)');
+    var fit = function () {
+      if (!nav) return;
+      if (!wide.matches) { hd.classList.remove('rg-tight'); return; }
+      var wasOpen = hd.classList.contains('menu-open');
+      hd.classList.remove('rg-tight');
+      var tight = nav.scrollWidth > nav.clientWidth + 1;
+      hd.classList.toggle('rg-tight', tight);
+      if (!tight && wasOpen) { hd.classList.remove('menu-open'); if (menu) menu.setAttribute('aria-expanded', 'false'); }
+    };
+    fit();
+    window.addEventListener('resize', fit);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+    window.addEventListener('load', fit);
+
+    var onScroll = function () { hd.classList.toggle('stuck', window.scrollY > 10); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
 
   /* ---------- Chat widget ---------- */
   var fab = document.getElementById('chatFab');
@@ -226,6 +254,8 @@
     if (window.initSections) window.initSections(el);
     if (window.initAnimations) window.initAnimations(el);
     if (window.initCarousels) window.initCarousels(el);
+    if (window.initReviewForms) window.initReviewForms(el);
+    if (window.initServiceScroll) window.initServiceScroll(el);
   }
 
   function load(el) {
@@ -275,7 +305,7 @@
       function ensure(tag) {
         if (tag === 'all' || grid.querySelector('.sv2-card[data-tag="' + tag + '"]')) return Promise.resolve();
         grid.classList.add('is-busy');
-        return fetch(sec.dataset.src + '/' + encodeURIComponent(tag), { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+        return fetch(sec.dataset.src + '/' + encodeURIComponent(tag) + (sec.dataset.v ? '?v=' + sec.dataset.v : ''), { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
           .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
           .then(function (html) { grid.insertAdjacentHTML('beforeend', html); })
           .finally(function () { grid.classList.remove('is-busy'); });
@@ -328,6 +358,19 @@
           c.style.setProperty('--n', Math.min(n++, 10));
           c.style.animation = 'none'; void c.offsetWidth; c.style.animation = '';
         });
+        // Home bento grid (data-limit): number the shown cards in their on-screen order as data-slot, keep only the
+        // first `limit`, and tell the grid how many it holds (data-cards; not data-count, which the count-up animation uses) so CSS picks the 3-row layout for that count.
+        var limit = parseInt(grid.dataset.limit || '0', 10);
+        if (limit) {
+          var shown = Array.prototype.filter.call(cards, function (c) { return !c.hidden; })
+            .sort(function (a, b) { return parseInt(a.style.order, 10) - parseInt(b.style.order, 10); });
+          shown.forEach(function (c, k) {
+            if (k >= limit) { c.hidden = true; return; }
+            c.dataset.slot = k;
+            c.style.setProperty('--n', k);
+          });
+          grid.dataset.cards = Math.min(shown.length, limit);
+        }
       }
       tabs.forEach(function (b) {
         b.addEventListener('click', function () {

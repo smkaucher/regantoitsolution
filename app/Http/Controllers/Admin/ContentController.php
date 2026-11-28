@@ -7,8 +7,6 @@ use App\Support\ContentTypes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 
 /** Generic CRUD for the home page content blocks described in ContentTypes. */
 class ContentController extends Controller
@@ -17,7 +15,11 @@ class ContentController extends Controller
     {
         $cfg = ContentTypes::get($type);
         $q = $cfg['model']::query();
-        $q = empty($cfg['no_order']) ? $q->orderBy('sort_order')->orderBy('id') : $q->orderByDesc('published_at')->orderByDesc('id');
+        if ($type === 'testimonials') {
+            // Reviews sent from the website that nobody has checked yet come first.
+            $q->orderByRaw("case when source = 'visitor' and reviewed_at is null then 0 else 1 end");
+        }
+        $q->orderBy('sort_order')->orderBy('id');
 
         return view('admin.content.index', ['type' => $type, 'cfg' => $cfg, 'items' => $q->get()]);
     }
@@ -27,9 +29,7 @@ class ContentController extends Controller
         $cfg = ContentTypes::get($type);
         $item = new $cfg['model']($cfg['defaults'] ?? []);
         $item->is_active = true;
-        if (empty($cfg['no_order'])) {
-            $item->sort_order = (int) $cfg['model']::max('sort_order') + 1;
-        }
+        $item->sort_order = (int) $cfg['model']::max('sort_order') + 1;
 
         return view('admin.content.form', ['type' => $type, 'cfg' => $cfg, 'item' => $item]);
     }
@@ -53,7 +53,7 @@ class ContentController extends Controller
     {
         $cfg = ContentTypes::get($type);
         $item = $cfg['model']::findOrFail($id);
-        $item->update($this->attributes($request, $cfg, $type, $item));
+        $item->update($this->attributes($request, $cfg, $type, $item) + $this->reviewed($type, $item));
 
         return redirect()->route('admin.content.edit', [$type, $item->id])->with('ok', ucfirst($cfg['singular']) . ' saved.');
     }
@@ -61,9 +61,15 @@ class ContentController extends Controller
     public function toggle(string $type, int $id)
     {
         $item = ContentTypes::get($type)['model']::findOrFail($id);
-        $item->update(['is_active' => !$item->is_active]);
+        $item->update(['is_active' => !$item->is_active] + $this->reviewed($type, $item));
 
-        return back()->with('ok', 'Updated.');
+        return back()->with('ok', $item->is_active ? 'Now visible on the website.' : 'Now hidden from the website.');
+    }
+
+    /** Showing, hiding or editing a visitor's review marks it as checked, so it leaves the "Waiting" list. */
+    private function reviewed(string $type, Model $item): array
+    {
+        return $type === 'testimonials' && $item->reviewed_at === null ? ['reviewed_at' => now()] : [];
     }
 
     public function destroy(string $type, int $id)
@@ -92,15 +98,9 @@ class ContentController extends Controller
                 $rules['remove_' . $name] = 'nullable|boolean';
             }
         }
-        if (!empty($cfg['slug'])) {
-            $rules['slug'] = ['nullable', 'string', 'max:200', 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/', Rule::unique($item?->getTable() ?? (new $cfg['model'])->getTable(), 'slug')->ignore($item)];
-        }
         $data = $request->validate($rules);
 
-        $attrs = ['is_active' => $request->boolean('is_active')];
-        if (empty($cfg['no_order'])) {
-            $attrs['sort_order'] = $data['sort_order'] ?? 0;
-        }
+        $attrs = ['is_active' => $request->boolean('is_active'), 'sort_order' => $data['sort_order'] ?? 0];
         foreach ($cfg['fields'] as $name => $def) {
             if ($def[1] === 'image') {
                 if ($request->hasFile($name)) {
@@ -114,23 +114,7 @@ class ContentController extends Controller
                 $attrs[$name] = ($data[$name] ?? null) === '' ? null : ($data[$name] ?? null);
             }
         }
-        if (!empty($cfg['slug'])) {
-            $attrs['slug'] = $this->uniqueSlug($cfg['model'], ($data['slug'] ?? '') ?: $data[$cfg['title']], $item);
-        }
-
         return $attrs;
-    }
-
-    private function uniqueSlug(string $model, string $source, ?Model $item): string
-    {
-        $base = Str::slug($source) ?: 'item';
-        $slug = $base;
-        $i = 2;
-        while ($model::where('slug', $slug)->when($item, fn ($q) => $q->where('id', '!=', $item->id))->exists()) {
-            $slug = $base . '-' . $i++;
-        }
-
-        return $slug;
     }
 
     /** Only files uploaded through this panel (under <type>/) are removed. */

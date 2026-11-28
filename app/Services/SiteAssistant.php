@@ -142,7 +142,7 @@ FACTS:
             'map' => config('site.map_url'),
             'services' => Service::active()->with('items')->get(),
             'projects' => Project::active()->get(),
-            'team' => collect(config('team.groups'))->flatten(1)->unique('name')->count(),
+            'team' => collect(\App\Models\TeamGroup::forSite()['groups'])->flatten(1)->unique('name')->count(),
         ];
     }
 
@@ -162,7 +162,7 @@ FACTS:
             $lines[] = "- {$p->title} [{$p->category}]" . ($p->url ? " {$p->url}" : '') . ($p->short_description ? ': ' . mb_substr($p->short_description, 0, 140) : '');
         }
         $lines[] = 'TEAM (/team):';
-        foreach (config('team.groups') as $group => $members) {
+        foreach (\App\Models\TeamGroup::forSite()['groups'] as $group => $members) {
             $lines[] = "- {$group}: " . collect($members)->map(fn ($m) => "{$m['name']} ({$m['designation']}; " . ($m['skills'] ?? '') . ')')->implode('; ');
         }
         $stats = Stat::active()->get();
@@ -180,7 +180,7 @@ FACTS:
             }
         }
         $lines[] = "OFFICE: {$f['address']} (map: {$f['map']})";
-        $lines[] = 'PAGES: Home, Projects, Services, About Us, Team, Blogs, Contact.';
+        $lines[] = 'PAGES: Home, Projects, Services, About Us, Team, Contact.';
 
         return implode("
 ", $lines);

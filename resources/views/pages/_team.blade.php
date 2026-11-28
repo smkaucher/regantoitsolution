@@ -7,10 +7,10 @@
                 'Facebook' => $m['facebook_url'] ?? null, 'GitHub' => $m['github_url'] ?? null,
             ]);
         @endphp
-        <article class="tm-card" tabindex="0" style="--i:{{ $loop->index }}@if(!empty($cover));--cover:url('{{ asset($cover) }}')@endif">
+        <article class="tm-card" tabindex="0" style="--i:{{ $loop->index }}@if(!empty($cover));--cover:url('{{ \App\Support\Media::url($cover) }}')@endif">
             <div class="tm-main">
                 <div class="tm-photo">
-                    @if(!empty($m['photo']))<img src="{{ asset($m['photo']) }}" alt="{{ $m['name'] }}" loading="lazy">
+                    @if(!empty($m['photo']))<img src="{{ \App\Support\Media::url($m['photo']) }}" alt="{{ $m['name'] }}" loading="lazy">
                     @else<div class="pg-avatar">{{ mb_substr($m['name'], 0, 1) }}</div>@endif
                 </div>
                 <h3>{{ $m['name'] }}</h3>

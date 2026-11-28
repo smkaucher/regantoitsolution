@@ -2,7 +2,6 @@
 
 namespace App\Support;
 
-use App\Models\Blog;
 use App\Models\Client;
 use App\Models\Faq;
 use App\Models\Stat;
@@ -10,9 +9,9 @@ use App\Models\Testimonial;
 
 /**
  * Admin "Home page content" resources. Each entry drives one generic CRUD:
- * fields => name => [label, type, rules, (hint)]. Types: text, textarea, number, url, image, datetime.
+ * fields => name => [label, type, rules, (hint)]. Types: text, textarea, number, url, image.
  * `cols` are the list columns; `title` is the field used as the row heading.
- * Every resource also has the standard sort_order and is_active fields (blogs have no sort_order).
+ * Every resource also has the standard sort_order and is_active fields.
  */
 class ContentTypes
 {
@@ -21,7 +20,7 @@ class ContentTypes
         return [
             'testimonials' => [
                 'model' => Testimonial::class, 'label' => 'Testimonials', 'singular' => 'testimonial', 'title' => 'name',
-                'cols' => ['role' => 'Role', 'rating' => 'Rating'],
+                'cols' => ['role' => 'Role', 'rating' => 'Rating', 'source' => 'Added by'],
                 'fields' => [
                     'name' => ['Name', 'text', 'required|string|max:120'],
                     'role' => ['Role / company', 'text', 'nullable|string|max:150'],
@@ -55,18 +54,6 @@ class ContentTypes
                     'name' => ['Client name', 'text', 'required|string|max:120'],
                     'logo' => ['Logo (optional)', 'image', 'nullable|image|max:2048'],
                     'url' => ['Website', 'url', 'nullable|url|max:255'],
-                ],
-            ],
-            'blogs' => [
-                'model' => Blog::class, 'label' => 'Blogs', 'singular' => 'article', 'title' => 'title', 'slug' => true, 'no_order' => true,
-                'cols' => ['category' => 'Category', 'published_at' => 'Published'],
-                'fields' => [
-                    'title' => ['Title', 'text', 'required|string|max:200'],
-                    'category' => ['Category', 'text', 'nullable|string|max:80'],
-                    'published_at' => ['Publish date', 'datetime', 'nullable|date'],
-                    'excerpt' => ['Excerpt', 'textarea', 'nullable|string|max:600'],
-                    'content' => ['Content (HTML allowed)', 'textarea', 'nullable|string|max:50000'],
-                    'image' => ['Cover image', 'image', 'nullable|image|max:4096'],
                 ],
             ],
         ];

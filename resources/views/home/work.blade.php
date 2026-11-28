@@ -8,11 +8,19 @@
         'Software' => ['storepal-e-commerce-store', 'regantify-platform-landing', 'shopnet-multi-category-store', 'rareman-fashion-store'],
         'UI/UX Design' => ['shopnet-ai-chat-ui', 'storepal-e-commerce-store', 'rareman-mobile-ui', 'regantify-platform-landing', 'shopnet-mobile-categories-ui', 'rareman-fashion-store', 'shopnet-mobile-home-ui', 'shopnet-multi-category-store'],
     ];
+    // Projects the admin marks "Featured" that aren't in the hand-picked lists above (e.g. a newly added one) go
+    // first in every tab they belong to, so the admin's Featured switch decides what shows up front.
+    $picked = collect($workOrder)->flatten()->unique();
+    $newFeatured = $projects->filter(fn ($p) => $p->is_featured && $p->cover_image && !$picked->contains($p->slug))
+        ->sortBy('sort_order')->pluck('slug')->all();
+    foreach ($workTabs as $tag) {
+        $workOrder[$tag] = array_values(array_unique(array_merge($newFeatured, $workOrder[$tag] ?? [])));
+    }
 @endphp
-<section class="block wk2" data-wk2 data-order="{{ json_encode($workOrder) }}">
-    <div class="wk2-head" data-replay data-threshold="0.4">
-        <span class="svc2-eyebrow" data-a="up">OUR WORK</span>
-        <h2 data-a="up" style="--d:.1s">Recent Work That Drives Results</h2>
+<section class="block wk2 hm hm-work" data-wk2 data-order="{{ json_encode($workOrder) }}" data-replay data-threshold="0.12">
+    <div class="hm-head">
+        <p class="hm-eb"><i></i>[ OUR WORK ]</p>
+        <h2 class="hm-h2">Recent work that <em>drives results.</em></h2>
     </div>
 
     <div class="wk2-tabs" role="tablist">
@@ -21,7 +29,8 @@
         @endforeach
     </div>
 
-    <div class="wk2-grid" id="wk2Grid">
+    {{-- Bento grid: 12 columns x 3 rows; site.js shows up to 7 cards and sets data-cards / data-slot for the layout --}}
+    <div class="wk2-grid hw-bento" id="wk2Grid" data-limit="7">
         @foreach($projects as $p)
             @php
                 $cover = \App\Support\Media::url($p->cover_image);

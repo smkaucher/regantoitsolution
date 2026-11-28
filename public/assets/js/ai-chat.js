@@ -20,7 +20,7 @@
     var h = esc(text);
     h = h.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     h = h.replace(/(https?:\/\/[^\s<]+[^\s<.,;:!?)])/g, '<a href="$1" target="_blank" rel="noreferrer">$1</a>');
-    h = h.replace(/(^|[\s(])(\/(?:projects|services|about|team|blog|contact)(?:\/[a-z0-9-]+)?)(?![\w\/-])/g, '$1<a href="$2">$2</a>');
+    h = h.replace(/(^|[\s(])(\/(?:projects|services|about|team|contact)(?:\/[a-z0-9-]+)?)(?![\w\/-])/g, '$1<a href="$2">$2</a>');
     return h.replace(/\n/g, '<br>');
   }
 
