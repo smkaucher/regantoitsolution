@@ -4,7 +4,11 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+// Public pages built in React (Inertia). Add a page here once it is converted (and remove it from BLADE_PATHS in
+// resources/js/lib/links.js); the others are still Blade.
+Route::middleware(\App\Http\Middleware\HandleInertiaRequests::class)->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+});
 Route::get('/home2', [HomeController::class, 'home2'])->name('home2');
 Route::get('/_/home/{part}', [HomeController::class, 'section'])->whereIn('part', ['services', 'work', 'features', 'reviews', 'faq'])->name('home.section');
 Route::get('/_/services/{slug}', [PageController::class, 'serviceCards'])->name('services.cards');
